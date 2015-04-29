@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>valueinjecter</id>
+    <version>2.3.1</version>
+    <authors>Valentin Plamadeala, Vadim Plamadeala</authors>
+    <description>ValueInjecter lets you define your own convention-based matching algorithms (ValueInjections) in order to match up (inject) source values to destination values. It is used for mapping Dto to Entity and back also for mapping IDataReader to objects, windows forms to object, basically anything. Also has support for flattening and unflattening. </description>
+    <projectUrl>http://valueinjecter.codeplex.com</projectUrl>
+  </metadata>
+</package>
