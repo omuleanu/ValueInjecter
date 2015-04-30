@@ -80,7 +80,7 @@
     <Compile Include="WebFormsInjections.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ValueInjecter\ValueInjecter.csproj">
+    <ProjectReference Include="..\..\ValueInjecter\ValueInjecter.csproj">
       <Project>{3C3ED7E4-062D-4C4F-A0E1-8F1A1EFCE1B6}</Project>
       <Name>ValueInjecter</Name>
     </ProjectReference>

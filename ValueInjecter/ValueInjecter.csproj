@@ -5,13 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6848BDA4-DF0F-4724-9234-CA7D05C92BFB}</ProjectGuid>
+    <ProjectGuid>{3C3ED7E4-062D-4C4F-A0E1-8F1A1EFCE1B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tests</RootNamespace>
-    <AssemblyName>Tests</AssemblyName>
+    <RootNamespace>Omu.ValueInjecter</RootNamespace>
+    <AssemblyName>Omu.ValueInjecter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -52,59 +53,42 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Omu.ValueInjecter.XML</DocumentationFile>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <NoWarn>1591</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>valinjkey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Injections\CloneInjection.cs" />
-    <Compile Include="Cloning.cs" />
-    <Compile Include="Injections\DateTimeToStr.cs" />
-    <Compile Include="Injections\DateToStrInjection.cs" />
-    <Compile Include="Injections\EnumToInt.cs" />
-    <Compile Include="Injections\IntToEnum.cs" />
-    <Compile Include="Injections\NormalToNullables.cs" />
-    <Compile Include="Injections\NullablesToNormal.cs" />
-    <Compile Include="Injections\SmartConventionInjection.cs" />
-    <Compile Include="Misc\DanRyanIDataReaderTests.cs" />
-    <Compile Include="EnumInjectionsTests.cs" />
-    <Compile Include="ExtensionsTests.cs" />
-    <Compile Include="FlatLoopInjectionTests.cs" />
-    <Compile Include="FlatteningTest.cs" />
-    <Compile Include="Misc\KohanTests.cs" />
-    <Compile Include="MapperTests.cs" />
-    <Compile Include="Misc\QrowTest.cs" />
-    <Compile Include="KnownSourceValueInjectionTest.cs" />
-    <Compile Include="KnownTargetValueInjectionTest.cs" />
-    <Compile Include="NullableInjectionsTests.cs" />
-    <Compile Include="SampleTypes\CountryDto.cs" />
-    <Compile Include="SampleTypes\Customer.cs" />
-    <Compile Include="SampleTypes\CustomerInput.cs" />
-    <Compile Include="SampleTypes\CustomerProxy.cs" />
-    <Compile Include="SampleTypes\FooForClone.cs" />
-    <Compile Include="SampleTypes\Tag1.cs" />
-    <Compile Include="Utils\AreEqual.cs" />
-    <Compile Include="Utils\TestingTools.cs" />
-    <Compile Include="TunnelierTests.cs" />
-    <Compile Include="UberFlatterTests.cs" />
+    <Compile Include="Injections\LoopInjection.cs" />
+    <Compile Include="Injections\PropertyInjection.cs" />
+    <Compile Include="Injections\FlatLoopInjection.cs" />
+    <Compile Include="Mapper.cs" />
+    <Compile Include="Flat\PropertyWithComponent.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Injections\INoSourceInjection.cs" />
+    <Compile Include="Injections\IValueInjection.cs" />
+    <Compile Include="Injections\KnownTargetInjection.cs" />
+    <Compile Include="Injections\KnownSourceInjection.cs" />
+    <Compile Include="Injections\NoSourceInjection.cs" />
+    <Compile Include="Injections\SameNameType.cs" />
+    <Compile Include="Flat\TrailFinder.cs" />
+    <Compile Include="Flat\Tunnelier.cs" />
+    <Compile Include="Flat\UberFlatter.cs" />
+    <Compile Include="Injections\UnflatLoopInjection.cs" />
+    <Compile Include="Injections\ValueInjection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ValueInjecter\ValueInjecter.csproj">
-      <Project>{3C3ED7E4-062D-4C4F-A0E1-8F1A1EFCE1B6}</Project>
-      <Name>ValueInjecter</Name>
-    </ProjectReference>
+    <Compile Include="StaticValueInjecter.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -124,7 +108,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="valinjkey.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

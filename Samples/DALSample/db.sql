@@ -1,3 +1,4 @@
+-- run this in master db
 create database dals
 go
 use dals
