@@ -23,12 +23,18 @@ Mapper.AddMap<Customer, CustomerInput>(src =>
 });
 ```
 ####InjectFrom
-`InjectFrom<TInjection>(source)` is used to map using a convention when `TInjection` is not specified it will map properties with exact same name and type
+`InjectFrom<TInjection>(source)` is used to map using a convention, when `TInjection` is not specified it will map properties with exact same name and type
 
-you can create you own injections by inheriting `LoopInjection` or `PropertyInjection`
-for flattening/unflattening you can use `FlatLoopInjection` and `UnflatLoopInjection`
+it's used like this:
+``` ruby
+target.InjectFrom(source);
+target.InjectFrom<Injection>(source);
+target.InjectFrom(new Injection(parameters), source);
+target.InjectFrom<Injection>(); // without source
+```
+you can create you own injections by inheriting `LoopInjection`, `PropertyInjection` and other base injections
 
-and there's more, see some examples of custom injections here: (put link to wiki page here)
+see some examples of custom injections here: [injections examples] (https://github.com/omuleanu/ValueInjecter/wiki/custom-injections-examples)
 
 ####Additional parameters
 an additional parameter can be set when mapping:
@@ -50,3 +56,6 @@ when using InjectFrom additional parameters can be sent to the injection:
     res.InjectFrom(new LoopInjection(new[] { "FirstName" }), customer); 
 ```
 in this case LoopInjection will ignore "FirstName" property; you can add private fields to your custom injections and give them value via the constructor as shown above
+
+####Flattening and unflattening
+you can use `FlatLoopInjection` and `UnflatLoopInjection` directly or inherit them, you can also use the `UberFlatter` class in you custom injections, have look at the source code for these injections.
