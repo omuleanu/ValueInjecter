@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Omu.ValueInjecter;
 using Omu.ValueInjecter.Injections;
 
+using Tests.SampleTypes;
 using Tests.Utils;
 
 namespace Tests
@@ -24,6 +25,22 @@ namespace Tests
             public string Name { get; set; }
             public string NameZype { get; set; }
             public int Age { get; set; }
+
+            public Foo FooR
+            {
+                get
+                {
+                    return null;
+                }
+            }
+
+            public string Prop1
+            {
+                set
+                {
+                    Name = value;
+                }
+            }
         }
 
         public class FlatFoo
@@ -34,7 +51,15 @@ namespace Tests
             public string Foo2NameZype { get; set; }
             public string Foo1Age { get; set; }
             public bool Age { get; set; }
+            public string FooRName { get; set; }
 
+            public string Foo1Prop1
+            {
+                set
+                {
+                    Foo1Name = value;
+                }
+            }
         }
 
         public class IntToStringFlat : FlatLoopInjection
@@ -123,6 +148,22 @@ namespace Tests
 
             foo.InjectFrom<IntToStrUnflat>(flat);
             foo.Foo1.Age.IsEqualTo(16);
+        }
+
+        [Test]
+        public void BasicTest()
+        {
+            var customer = GetCustomer();
+            var res = new CustomerInput();
+
+            res.InjectFrom<FlatLoopInjection>(customer);
+            res.InjectFrom<UnflatLoopInjection>(customer);
+        }
+
+        private static Customer GetCustomer()
+        {
+            var customer = new Customer { FirstName = "Art", LastName = "Vandelay", Id = 123, RegDate = DateTime.UtcNow };
+            return customer;
         }
     }
 }

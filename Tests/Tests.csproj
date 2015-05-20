@@ -77,6 +77,7 @@
     <Compile Include="Injections\NormalToNullables.cs" />
     <Compile Include="Injections\NullablesToNormal.cs" />
     <Compile Include="Injections\SmartConventionInjection.cs" />
+    <Compile Include="LoopInjectionTests.cs" />
     <Compile Include="Misc\DanRyanIDataReaderTests.cs" />
     <Compile Include="EnumInjectionsTests.cs" />
     <Compile Include="ExtensionsTests.cs" />

@@ -32,13 +32,12 @@ namespace Omu.ValueInjecter.Injections
 
         protected virtual void Execute(PropertyInfo sp, object source, object target)
         {
-            if (ignoredProps == null || !ignoredProps.Contains(sp.Name))
+            if (sp.CanRead && (ignoredProps == null || !ignoredProps.Contains(sp.Name)))
             {
-                var targetProp = target.GetType().GetProperty(sp.Name);
-                if (targetProp != null && targetProp.PropertyType == sp.PropertyType)
+                var tp = target.GetType().GetProperty(sp.Name);
+                if (tp != null && tp.CanWrite && tp.PropertyType == sp.PropertyType)
                 {
-                    var val = sp.GetValue(source);
-                    targetProp.SetValue(target, val);
+                    tp.SetValue(target, sp.GetValue(source));
                 }
             }
         }

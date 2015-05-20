@@ -2,7 +2,6 @@
 using System.Data;
 using System.Reflection;
 
-using Omu.ValueInjecter;
 using Omu.ValueInjecter.Injections;
 
 namespace DALSample
@@ -13,13 +12,13 @@ namespace DALSample
         {
             for (var i = 0; i < source.FieldCount; i++)
             {
-                var activeTarget = target.GetType().GetProperty(source.GetName(i), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                if (activeTarget == null) continue;
+                var trgProp = target.GetType().GetProperty(source.GetName(i), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (trgProp == null) continue;
 
                 var value = source.GetValue(i);
                 if (value == DBNull.Value) continue;
 
-                activeTarget.SetValue(target, value);
+                trgProp.SetValue(target, value);
             }
         }
     }

@@ -15,9 +15,13 @@ namespace Omu.ValueInjecter.Flat
 
             var prop = type.GetProperty(trail[0]);
 
-            if (prop.GetValue(o) == null) prop.SetValue(o, Activator.CreateInstance(prop.PropertyType));
-
             var val = prop.GetValue(o);
+
+            if (val == null)
+            {
+                val = Activator.CreateInstance(prop.PropertyType);
+                prop.SetValue(o, val);
+            }
 
             trail.RemoveAt(0);
             return Digg(trail, val);
@@ -29,12 +33,7 @@ namespace Omu.ValueInjecter.Flat
 
             if (trail.Count == 1)
             {
-                return new PropertyWithComponent
-                    {
-                        Component = o, 
-                        Property = type.GetProperty(trail[0]), 
-                        Level = level
-                    };
+                return new PropertyWithComponent { Component = o, Property = type.GetProperty(trail[0]), Level = level };
             }
 
             var prop = type.GetProperty(trail[0]);

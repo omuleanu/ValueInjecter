@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
 using NUnit.Framework;
@@ -42,7 +43,7 @@ namespace Tests
             var w = new Stopwatch();
 
             w.Start();
-            Mapper.Map<CustomerInput>(customer);
+            var customerInput = Mapper.Map<CustomerInput>(customer);
             w.Stop();
 
             Console.WriteLine("{0} one", w.Elapsed);
@@ -180,23 +181,23 @@ namespace Tests
         public void ShouldMapWithNewAddedMap()
         {
             var customer = GetCustomer();
-            Mapper.AddMap<Customer, Customer>((src, tag) =>
+            Mapper.AddMap<Customer, CustomerInput>((src, tag) =>
             {
-                var res = new Customer();
+                var res = new CustomerInput();
                 return res;
             });
 
-            Mapper.AddMap<Customer, Customer>(src =>
+            Mapper.AddMap<Customer, CustomerInput>(src =>
             {
-                var res = new Customer();
+                var res = new CustomerInput();
                 res.Id = src.Id;
                 res.FirstName = src.FirstName;
                 res.LastName = src.LastName;
                 return res;
             });
 
-            var c1 = Mapper.Map<Customer, Customer>(customer);
-            var c2 = Mapper.Map<Customer>(customer);
+            var c1 = Mapper.Map<Customer, CustomerInput>(customer);
+            var c2 = Mapper.Map<CustomerInput>(customer);
 
             c1.InjectFrom<AreEqual>(c2);
 

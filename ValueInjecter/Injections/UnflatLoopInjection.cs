@@ -23,17 +23,19 @@ namespace Omu.ValueInjecter.Injections
 
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
         {
-            var val = sp.GetValue(source);
-            tp.SetValue(target, val);
+            tp.SetValue(target, sp.GetValue(source));
         }
 
         protected virtual void Execute(PropertyInfo sp, object source, object target)
         {
-            var endpoints = UberFlatter.Unflat(sp.Name, target, (upn, prop) => Match(upn, prop, sp)).ToArray();
-
-            foreach (var endpoint in endpoints)
+            if (sp.CanRead)
             {
-                SetValue(source, endpoint.Component, sp, endpoint.Property);
+                var endpoints = UberFlatter.Unflat(sp.Name, target, (upn, prop) => Match(upn, prop, sp)).ToArray();
+
+                foreach (var endpoint in endpoints)
+                {
+                    SetValue(source, endpoint.Component, sp, endpoint.Property);
+                }
             }
         }
     }

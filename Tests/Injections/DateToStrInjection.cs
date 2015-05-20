@@ -5,20 +5,17 @@ using Omu.ValueInjecter.Injections;
 
 namespace Tests.Injections
 {
-    public class DateToStrInjection : PropertyInjection
+    public class DateToStrInjection : LoopInjection
     {
-        protected override void Execute(PropertyInfo sp, object source, object target)
+        protected override bool MatchTypes(Type source, Type target)
         {
-            if (sp.PropertyType == typeof(DateTime) && IsNotIgnored(sp.Name))
-            {
-                var tp = target.GetType().GetProperty(sp.Name);
-                if (tp != null && tp.PropertyType == typeof(string))
-                {
-                    var val = (DateTime)sp.GetValue(source);
-                    
-                    tp.SetValue(target, val.ToShortDateString());
-                }
-            }
+            return source == typeof(DateTime) && target == typeof(string);
+        }
+
+        protected override void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
+        {
+            var val = (DateTime)sp.GetValue(source);
+            tp.SetValue(target, val.ToShortDateString());
         }
     }
 }

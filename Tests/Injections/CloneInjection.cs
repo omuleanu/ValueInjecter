@@ -50,7 +50,6 @@ namespace Tests.Injections
                 if (sp.PropertyType.GetGenericTypeDefinition().GetInterfaces().Contains(typeof(IEnumerable)))
                 {
                     var genericType = sp.PropertyType.GetGenericArguments()[0];
-                    //if (t.IsValueType || t == typeof(string)) tp.SetValue(target, val);
 
                     var listType = typeof(List<>).MakeGenericType(genericType);
                     var list = Activator.CreateInstance(listType);

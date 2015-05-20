@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 
-using Omu.ValueInjecter;
 using Omu.ValueInjecter.Injections;
 
 namespace Tests.Injections

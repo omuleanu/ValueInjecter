@@ -34,6 +34,11 @@ namespace Omu.ValueInjecter
             return isAnonymousType;
         }
 
+        public static PropertyInfo[] GetProps(this object o)
+        {
+            return o.GetType().GetProps();
+        }
+
         /// <summary>
         /// http://stackoverflow.com/a/2444090/112100
         /// </summary>

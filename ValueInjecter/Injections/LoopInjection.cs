@@ -33,10 +33,10 @@ namespace Omu.ValueInjecter.Injections
 
         protected override void Execute(PropertyInfo sp, object source, object target)
         {
-            if (ignoredProps == null || !ignoredProps.Contains(sp.Name))
+            if (sp.CanRead && (ignoredProps == null || !ignoredProps.Contains(sp.Name)))
             {
                 var tp = target.GetType().GetProperty(GetTargetProp(sp.Name));
-                if (tp != null && MatchTypes(sp.PropertyType, tp.PropertyType))
+                if (tp != null && tp.CanWrite && MatchTypes(sp.PropertyType, tp.PropertyType))
                 {
                     SetValue(source, target, sp, tp);
                 }
