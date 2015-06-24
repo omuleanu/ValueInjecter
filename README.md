@@ -70,11 +70,10 @@ you can use `FlatLoopInjection` and `UnflatLoopInjection` directly or inherit th
 By default `Mapper.Map` will only map properties with the exact same name and type, this can be changed by setting `Mapper.DefaultMap`, here's an example:
 
 ``` ruby
-    Mapper.DefaultMap = (src, resType, tag) =>
+    Mapper.DefaultMap = (src, target, tag) =>
     {
-        var res = Activator.CreateInstance(resType);
-        res.InjectFrom(src);
-        return res;
+        target.InjectFrom(src);
+        return target;
     };
 ```
 
