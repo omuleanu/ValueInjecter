@@ -10,6 +10,11 @@ var customerInput = Mapper.Map<Customer, CustomerInput>(customer);
 ```
 (useful when working with EF proxy objects)
 
+You can also map an existing object:
+``` ruby
+var target = new CustomerInput();
+var customerInput = Mapper.Map<Customer, CustomerInput>(customer, target); 
+```
 by default it will only map properties with the exact same name and type (this can be changed)
 
 ####custom maps 
