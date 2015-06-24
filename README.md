@@ -10,6 +10,11 @@ var customerInput = Mapper.Map<Customer, CustomerInput>(customer);
 ```
 (useful when working with EF proxy objects)
 
+You can also map an existing object:
+``` ruby
+var target = new CustomerInput();
+var customerInput = Mapper.Map<Customer, CustomerInput>(customer, target); 
+```
 by default it will only map properties with the exact same name and type (this can be changed)
 
 ####custom maps 
@@ -21,6 +26,14 @@ Mapper.AddMap<Customer, CustomerInput>(src =>
     res.InjectFrom(src); // maps properties with same name and type
     res.FullName = src.FirstName + " " + src.LastName;
     return res;
+});
+```
+``` ruby
+Mapper.AddMap<Customer, CustomerInput>((src, target, tag)  =>
+{
+    target.InjectFrom(src); // maps properties with same name and type
+    target.FullName = src.FirstName + " " + src.LastName;
+    return target;
 });
 ```
 ####InjectFrom
@@ -65,11 +78,10 @@ you can use `FlatLoopInjection` and `UnflatLoopInjection` directly or inherit th
 By default `Mapper.Map` will only map properties with the exact same name and type, this can be changed by setting `Mapper.DefaultMap`, here's an example:
 
 ``` ruby
-    Mapper.DefaultMap = (src, resType, tag) =>
+    Mapper.DefaultMap = (src, target, tag) =>
     {
-        var res = Activator.CreateInstance(resType);
-        res.InjectFrom(src);
-        return res;
+        target.InjectFrom(src);
+        return target;
     };
 ```
 

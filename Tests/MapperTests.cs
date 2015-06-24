@@ -31,7 +31,7 @@ namespace Tests
                 {
                     var res = new CustomerInput();
                     res.InjectFrom(src);
-                    
+
                     //res.RegDate = src.RegDate.ToShortDateString();
                     //res.RegDate = src.RegDate.tos;
                     //res.FirstName = src.FirstName;
@@ -39,7 +39,7 @@ namespace Tests
                     //res.Id = src.Id;
                     return res;
                 });
-            
+
             var w = new Stopwatch();
 
             w.Start();
@@ -112,7 +112,7 @@ namespace Tests
             var ci2 = Mapper.Map<CustomerInput>(new { RegDate = DateTime.Now });
             Assert.IsNull(ci2.RegDate);
         }
-       
+
         [Test]
         public void ShouldUseTag()
         {
@@ -212,7 +212,7 @@ namespace Tests
             var customerProxy = new CustomerProxy { FirstName = "c1", ProxyName = "proxy1", RegDate = DateTime.Now };
 
             Mapper.AddMap<Customer, CustomerInput>(src =>
-                { 
+                {
                     var res = new CustomerInput();
                     res.InjectFrom(src);
                     res.RegDate = src.RegDate.ToShortDateString();
@@ -223,6 +223,25 @@ namespace Tests
 
             Assert.AreEqual(customerProxy.RegDate.ToShortDateString(), input.RegDate);
             Assert.AreEqual(customerProxy.FirstName, input.FirstName);
+        }
+
+        [Test]
+        public void ShouldMapWithExistingObject()
+        {
+            var existingCustomer = new Customer { Id = 1, FirstName = "c1", LastName = "lnc1", RegDate = DateTime.Parse("02/01/2015") };
+            var customerToMap = new CustomerDifferent { CustomerId = 2, FirstName = "c2", LastName = "lnc1", RegDate = DateTime.Now };
+                        
+            Mapper.AddMap<CustomerDifferent, Customer>((src, target, tag) =>
+            {
+                target.InjectFrom(src);
+                target.Id = src.CustomerId;
+                return target;
+            });
+
+            existingCustomer = Mapper.Map(customerToMap, existingCustomer);
+
+            Assert.AreEqual(existingCustomer.Id, customerToMap.CustomerId);
+            Assert.AreEqual(existingCustomer.RegDate, customerToMap.RegDate);
         }
 
         private static Customer GetCustomer()
