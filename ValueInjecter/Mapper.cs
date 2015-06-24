@@ -45,12 +45,32 @@ namespace Omu.ValueInjecter
             return (TResult)DefaultMap(source, typeof(TResult), tag);
         }
 
+        public static TResult Map<TSource, TResult>(TSource source, TResult target, object tag = null)
+        {
+            Tuple<object, bool> funct;
+            Maps.TryGetValue(new Tuple<Type, Type>(typeof(TSource), typeof(TResult)), out funct);
+
+            if (funct != null)
+            {
+                if (funct.Item2)
+                    return ((Func<TSource, TResult, object, TResult>)funct.Item1)(source, target, tag);
+                return ((Func<TSource, TResult, TResult>)funct.Item1)(source, target);
+            }
+            
+            return (TResult)DefaultMap(source, typeof(TResult), tag);
+        }
+
         public static void AddMap<TSource, TResult>(Func<TSource, TResult> func)
         {
             Maps.AddOrUpdate(new Tuple<Type, Type>(typeof(TSource), typeof(TResult)), new Tuple<object, bool>(func, false), (key, oldValue) => new Tuple<object, bool>(func, false));
         }
 
         public static void AddMap<TSource, TResult>(Func<TSource, object, TResult> func)
+        {
+            Maps.AddOrUpdate(new Tuple<Type, Type>(typeof(TSource), typeof(TResult)), new Tuple<object, bool>(func, true), (key, oldValue) => new Tuple<object, bool>(func, true));
+        }
+
+        public static void AddMap<TSource, TResult>(Func<TSource, TResult, object, TResult> func)
         {
             Maps.AddOrUpdate(new Tuple<Type, Type>(typeof(TSource), typeof(TResult)), new Tuple<object, bool>(func, true), (key, oldValue) => new Tuple<object, bool>(func, true));
         }
