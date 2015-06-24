@@ -28,6 +28,14 @@ Mapper.AddMap<Customer, CustomerInput>(src =>
     return res;
 });
 ```
+``` ruby
+Mapper.AddMap<Customer, CustomerInput>((src, target, tag)  =>
+{
+    target.InjectFrom(src); // maps properties with same name and type
+    target.FullName = src.FirstName + " " + src.LastName;
+    return target;
+});
+```
 ####InjectFrom
 `InjectFrom<TInjection>(source)` is used to map using a convention, when `TInjection` is not specified it will map properties with exact same name and type
 
