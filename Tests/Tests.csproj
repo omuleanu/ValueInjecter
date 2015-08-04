@@ -89,6 +89,7 @@
     <Compile Include="KnownSourceValueInjectionTest.cs" />
     <Compile Include="KnownTargetValueInjectionTest.cs" />
     <Compile Include="NullableInjectionsTests.cs" />
+    <Compile Include="PrivateSetterTests.cs" />
     <Compile Include="SampleTypes\CountryDto.cs" />
     <Compile Include="SampleTypes\Customer.cs" />
     <Compile Include="SampleTypes\CustomerInput.cs" />
