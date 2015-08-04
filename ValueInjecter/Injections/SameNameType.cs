@@ -1,4 +1,6 @@
-﻿namespace Omu.ValueInjecter.Injections
+﻿using System.Reflection;
+
+namespace Omu.ValueInjecter.Injections
 {
     internal class SameNameType : ValueInjection
     {
@@ -9,9 +11,23 @@
             foreach (var sp in sourceProps)
             {
                 var tp = targetType.GetProperty(sp.Name);
-                if (tp != null && tp.CanWrite && sp.CanRead && sp.PropertyType == tp.PropertyType)
+                if (tp != null && sp.CanRead && sp.PropertyType == tp.PropertyType)
                 {
-                    tp.SetValue(target, sp.GetValue(source));
+                    var value = sp.GetValue(source);
+                    if (tp.CanWrite)
+                    {
+                        tp.SetValue(target, value);
+                    }
+                    else if (tp.DeclaringType != null)
+                    {
+                        //When the property is of a baseclass with a private setter, canwrite is false
+                        //The method below is used for setting these kind of properties.
+                        var declaringTypePropertyInfo = tp.DeclaringType.GetProperty(tp.Name);
+                        if (declaringTypePropertyInfo.CanWrite)
+                        {
+                            declaringTypePropertyInfo.SetValue(target, value);
+                        }
+                    }
                 }
             }
         }
