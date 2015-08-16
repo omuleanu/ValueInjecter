@@ -75,7 +75,10 @@ By default `Mapper.Map` will only map properties with the exact same name and ty
 
 ####Default InjectFrom
 You can change the default injection by setting 
-    `StaticValueInjecter.DefaultInjection = new MyInjection();`
+``` ruby
+    StaticValueInjecter.DefaultInjection = new MyInjection();
+```
+    
 ####Multiple mappers
 Multiple mappers with different configurations can be used by creating multiple instances of MapperInstance
 ``` ruby
