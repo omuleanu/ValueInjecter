@@ -73,6 +73,23 @@ By default `Mapper.Map` will only map properties with the exact same name and ty
     };
 ```
 
+####Default InjectFrom
+You can change the default injection by setting 
+    `StaticValueInjecter.DefaultInjection = new MyInjection();`
+####Multiple mappers
+Multiple mappers with different configurations can be used by creating multiple instances of MapperInstance
+``` ruby
+	var mapper1 = new MapperInstance();
+	mapper1.AddMap<Customer, Customer>(o => new Customer { FirstName = "mapper1" });
+	
+	var mapper2 = new MapperInstance();
+	mapper2.AddMap<Customer, Customer>(o => new Customer { FirstName = "mapper2" });	
+
+	var m1 = mapper1.Map<Customer>(customer);
+	var m2 = mapper2.Map<Customer>(customer);
+```
+you could store the instance in a static member, or use your IoC Container
+
 ####Samples
 there's samples in the source code for winforms, ASP.net web-forms, DAL, and wpf
 
