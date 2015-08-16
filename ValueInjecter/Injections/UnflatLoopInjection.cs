@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 
 using Omu.ValueInjecter.Flat;
@@ -7,6 +8,17 @@ namespace Omu.ValueInjecter.Injections
 {
     public class UnflatLoopInjection : ValueInjection
     {
+        protected Func<PropertyInfo, object, object> activator;
+
+        public UnflatLoopInjection()
+        {
+        }
+
+        public UnflatLoopInjection(Func<PropertyInfo, object, object> activator)
+        {
+            this.activator = activator;
+        }
+
         protected override void Inject(object source, object target)
         {
             var sourceProps = source.GetType().GetProps();
@@ -16,9 +28,9 @@ namespace Omu.ValueInjecter.Injections
             }
         }
 
-        protected virtual bool Match(string upn, PropertyInfo prop, PropertyInfo sourceProp)
+        protected virtual bool Match(string unflatName, PropertyInfo prop, PropertyInfo sourceProp)
         {
-            return prop.PropertyType == sourceProp.PropertyType && upn == prop.Name && prop.GetSetMethod() != null;
+            return prop.PropertyType == sourceProp.PropertyType && unflatName == prop.Name && prop.GetSetMethod() != null;
         }
 
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
@@ -30,7 +42,7 @@ namespace Omu.ValueInjecter.Injections
         {
             if (sp.CanRead && sp.GetGetMethod() != null)
             {
-                var endpoints = UberFlatter.Unflat(sp.Name, target, (upn, prop) => Match(upn, prop, sp)).ToArray();
+                var endpoints = UberFlatter.Unflat(sp.Name, target, (upn, prop) => Match(upn, prop, sp), activator).ToArray();
 
                 foreach (var endpoint in endpoints)
                 {

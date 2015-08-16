@@ -99,6 +99,7 @@
     <Compile Include="SampleTypes\PrivateSetter\Publicgetset.cs" />
     <Compile Include="SampleTypes\Tag1.cs" />
     <Compile Include="SampleTypes\PrivateSetter\Privategetset.cs" />
+    <Compile Include="UnflatLoopInjectionTests.cs" />
     <Compile Include="Utils\AreEqual.cs" />
     <Compile Include="Utils\TestingTools.cs" />
     <Compile Include="TunnelierTests.cs" />

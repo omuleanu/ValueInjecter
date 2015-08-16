@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Omu.ValueInjecter.Flat
 {
     public static class Tunnelier
     {
-        public static PropertyWithComponent Digg(IList<string> trail, object o)
+        public static PropertyWithComponent Digg(IList<string> trail, object o, Func<PropertyInfo, object, object> activator = null)
         {
             var type = o.GetType();
             if (trail.Count == 1)
@@ -19,12 +20,13 @@ namespace Omu.ValueInjecter.Flat
 
             if (val == null)
             {
-                val = Activator.CreateInstance(prop.PropertyType);
+                val = activator == null ? Activator.CreateInstance(prop.PropertyType) : activator(prop, o);
+
                 prop.SetValue(o, val);
             }
 
             trail.RemoveAt(0);
-            return Digg(trail, val);
+            return Digg(trail, val, activator);
         }
 
         public static PropertyWithComponent GetValue(IList<string> trail, object o, int level = 0)

@@ -35,8 +35,7 @@ namespace Tests
         public void DiggDuggs()
         {
             var o = new Foo();
-            Tunnelier.Digg(new List<string> {"Parent", "Parent", "Name"}, o).IsNotNull();
+            Tunnelier.Digg(new List<string> {"Parent", "Parent", "Name"}, o, null).IsNotNull();
         }
-
     }
 }

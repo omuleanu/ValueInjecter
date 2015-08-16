@@ -76,20 +76,6 @@ namespace Tests
             }
         }
 
-        public class IntToStrUnflat : UnflatLoopInjection
-        {
-            protected override bool Match(string upn, PropertyInfo prop, PropertyInfo sourceProp)
-            {
-                return upn == prop.Name && prop.PropertyType == typeof(int) && sourceProp.PropertyType == typeof(string);
-            }
-
-            protected override void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
-            {
-                var val = Convert.ToInt32(sp.GetValue(source));
-                tp.SetValue(target, val);
-            }
-        }
-
         [Test]
         public void Unflattening()
         {
@@ -138,16 +124,6 @@ namespace Tests
 
             flat.InjectFrom<IntToStringFlat>(foo);
             flat.Foo1Age.IsEqualTo("18");
-        }
-
-        [Test]
-        public void GenericUnflatTest()
-        {
-            var flat = new FlatFoo { Foo1Age = "16" };
-            var foo = new Foo();
-
-            foo.InjectFrom<IntToStrUnflat>(flat);
-            foo.Foo1.Age.IsEqualTo(16);
         }
 
         [Test]
