@@ -1,4 +1,4 @@
-get via nuget **[ValueInjecter](https://www.nuget.org/packages/ValueInjecter/)** or download [here](http://valueinjecter.codeplex.com/downloads/get/1458003)
+get via nuget **[ValueInjecter](https://www.nuget.org/packages/ValueInjecter/)** or download [here](https://valueinjecter.codeplex.com/downloads/get/1479182)
 
 ####usage
 ``` ruby
