@@ -87,6 +87,7 @@
     <Compile Include="Flat\UberFlatter.cs" />
     <Compile Include="Injections\UnflatLoopInjection.cs" />
     <Compile Include="Injections\ValueInjection.cs" />
+    <Compile Include="MapperInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticValueInjecter.cs" />
   </ItemGroup>

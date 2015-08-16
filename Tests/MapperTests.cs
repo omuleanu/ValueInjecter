@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 
 using NUnit.Framework;
 
 using Omu.ValueInjecter;
-using Omu.ValueInjecter.Injections;
 
 using Tests.Injections;
 using Tests.SampleTypes;
@@ -32,7 +30,7 @@ namespace Tests
                 {
                     var res = new CustomerInput();
                     res.InjectFrom(src);
-                    
+
                     //res.RegDate = src.RegDate.ToShortDateString();
                     //res.RegDate = src.RegDate.tos;
                     //res.FirstName = src.FirstName;
@@ -40,7 +38,7 @@ namespace Tests
                     //res.Id = src.Id;
                     return res;
                 });
-            
+
             var w = new Stopwatch();
 
             w.Start();
@@ -113,7 +111,7 @@ namespace Tests
             var ci2 = Mapper.Map<CustomerInput>(new { RegDate = DateTime.Now });
             Assert.IsNull(ci2.RegDate);
         }
-       
+
         [Test]
         public void ShouldUseTag()
         {
@@ -213,7 +211,7 @@ namespace Tests
             var customerProxy = new CustomerProxy { FirstName = "c1", ProxyName = "proxy1", RegDate = DateTime.Now };
 
             Mapper.AddMap<Customer, CustomerInput>(src =>
-                { 
+                {
                     var res = new CustomerInput();
                     res.InjectFrom(src);
                     res.RegDate = src.RegDate.ToShortDateString();
@@ -224,6 +222,29 @@ namespace Tests
 
             Assert.AreEqual(customerProxy.RegDate.ToShortDateString(), input.RegDate);
             Assert.AreEqual(customerProxy.FirstName, input.FirstName);
+        }
+
+        [Test]
+        public void ShouldMapDifferentlyUsingMultipleMapperInstances()
+        {
+            var mapper1 = new MapperInstance();
+            var mapper2 = new MapperInstance();
+
+            Mapper.AddMap<Customer, Customer>(o => (Customer)new Customer().InjectFrom(o));
+            mapper1.AddMap<Customer, Customer>(o => new Customer { Id = 1, FirstName = "mapper1" });
+            mapper2.AddMap<Customer, Customer>(o => new Customer { Id = 2, FirstName = "mapper2" });
+
+            var customer = GetCustomer();
+
+            var m1 = mapper1.Map<Customer>(customer);
+            var m2 = mapper2.Map<Customer>(customer);
+            var m = Mapper.Map<Customer>(customer);
+
+            Assert.AreEqual(customer.Id, m.Id);
+            Assert.AreEqual(1, m1.Id);
+            Assert.AreEqual("mapper1", m1.FirstName);
+            Assert.AreEqual(2, m2.Id);
+            Assert.AreEqual("mapper2", m2.FirstName);
         }
 
         private static Customer GetCustomer()

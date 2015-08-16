@@ -1,0 +1,13 @@
+version 3.1
+ - added MapperInstance
+ - added activator parameter for UnflatLoopInjection and Tunnerlier Digg method
+ - default injection can be changed
+ - private get and set is not being used by default
+
+version 3.0
+==========================
+ - added Mapper
+ - added LoopInjection, PropertyInjection
+ - added FlatLoopInject, UnflatLoopInjection
+ - renamed, refactored KnownSourceInjection, KnownTargetInjection
+ - removed ConventionInjection, LoopValueInjection, FlatLoopValueInjection, UnflatLoopValueInjection
