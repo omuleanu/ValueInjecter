@@ -4,6 +4,8 @@ namespace Omu.ValueInjecter
 {
     public static class StaticValueInjecter
     {
+        public static IValueInjection DefaultInjection = new SameNameType();
+
         /// <summary>
         /// Injects values from source to target
         /// </summary>
@@ -58,7 +60,7 @@ namespace Omu.ValueInjecter
         /// </summary>
         public static object InjectFrom(this object target, object source)
         {
-            return InjectFrom<SameNameType>(target, source);
+            return DefaultInjection.Map(source, target);
         }
     }
 }

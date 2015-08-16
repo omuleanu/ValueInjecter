@@ -5,6 +5,7 @@ using System.Diagnostics;
 using NUnit.Framework;
 
 using Omu.ValueInjecter;
+using Omu.ValueInjecter.Injections;
 
 using Tests.Injections;
 using Tests.SampleTypes;

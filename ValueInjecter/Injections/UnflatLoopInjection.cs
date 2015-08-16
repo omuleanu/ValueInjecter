@@ -18,7 +18,7 @@ namespace Omu.ValueInjecter.Injections
 
         protected virtual bool Match(string upn, PropertyInfo prop, PropertyInfo sourceProp)
         {
-            return prop.PropertyType == sourceProp.PropertyType && upn == prop.Name;
+            return prop.PropertyType == sourceProp.PropertyType && upn == prop.Name && prop.GetSetMethod() != null;
         }
 
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
@@ -28,7 +28,7 @@ namespace Omu.ValueInjecter.Injections
 
         protected virtual void Execute(PropertyInfo sp, object source, object target)
         {
-            if (sp.CanRead)
+            if (sp.CanRead && sp.GetGetMethod() != null)
             {
                 var endpoints = UberFlatter.Unflat(sp.Name, target, (upn, prop) => Match(upn, prop, sp)).ToArray();
 

@@ -64,9 +64,9 @@ namespace Tests
 
         public class IntToStringFlat : FlatLoopInjection
         {
-            protected override bool Match(string upn, PropertyInfo prop, PropertyInfo target)
+            protected override bool Match(string unflatName, PropertyInfo prop, PropertyInfo target)
             {
-                return upn == prop.Name && prop.PropertyType == typeof(int) && target.PropertyType == typeof(string);
+                return unflatName == prop.Name && prop.PropertyType == typeof(int) && target.PropertyType == typeof(string);
             }
 
             protected override void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)

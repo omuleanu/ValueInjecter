@@ -89,12 +89,16 @@
     <Compile Include="KnownSourceValueInjectionTest.cs" />
     <Compile Include="KnownTargetValueInjectionTest.cs" />
     <Compile Include="NullableInjectionsTests.cs" />
+    <Compile Include="PrivateSetterTests.cs" />
     <Compile Include="SampleTypes\CountryDto.cs" />
     <Compile Include="SampleTypes\Customer.cs" />
     <Compile Include="SampleTypes\CustomerInput.cs" />
     <Compile Include="SampleTypes\CustomerProxy.cs" />
     <Compile Include="SampleTypes\FooForClone.cs" />
+    <Compile Include="SampleTypes\PrivateSetter\PrivategetsetBase.cs" />
+    <Compile Include="SampleTypes\PrivateSetter\Publicgetset.cs" />
     <Compile Include="SampleTypes\Tag1.cs" />
+    <Compile Include="SampleTypes\PrivateSetter\Privategetset.cs" />
     <Compile Include="Utils\AreEqual.cs" />
     <Compile Include="Utils\TestingTools.cs" />
     <Compile Include="TunnelierTests.cs" />

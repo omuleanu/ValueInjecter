@@ -1,22 +1,14 @@
 ﻿using System;
-using System.Reflection;
 
 using Omu.ValueInjecter.Injections;
 
 namespace Tests.Injections
 {
-    public class IntToEnum : PropertyInjection
+    public class IntToEnum : LoopInjection
     {
-        protected override void Execute(PropertyInfo sp, object source, object target)
+        protected override bool MatchTypes(Type source, Type target)
         {
-            if (sp.PropertyType == typeof(int) && IsNotIgnored(sp.Name))
-            {
-                var targetProp = target.GetType().GetProperty(sp.Name);
-                if (targetProp != null && targetProp.PropertyType.IsSubclassOf(typeof(Enum)))
-                {
-                    targetProp.SetValue(target, sp.GetValue(source));
-                }
-            }
+            return source == typeof(int) && target.IsSubclassOf(typeof(Enum));
         }
     }
 }

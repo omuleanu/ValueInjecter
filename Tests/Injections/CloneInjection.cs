@@ -9,7 +9,7 @@ using Omu.ValueInjecter.Injections;
 
 namespace Tests.Injections
 {
-    public class CloneInjection : PropertyInjection
+    public class CloneInjection : LoopInjection
     {
         protected override void Execute(PropertyInfo sp, object source, object target)
         {

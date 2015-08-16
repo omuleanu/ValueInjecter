@@ -16,9 +16,9 @@ namespace Omu.ValueInjecter.Injections
             }
         }
 
-        protected virtual bool Match(string upn, PropertyInfo prop, PropertyInfo target)
+        protected virtual bool Match(string unflatName, PropertyInfo prop, PropertyInfo target)
         {
-            return prop.PropertyType == target.PropertyType && upn == prop.Name;
+            return prop.PropertyType == target.PropertyType && unflatName == prop.Name && prop.GetGetMethod() != null;
         }
 
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
@@ -28,7 +28,7 @@ namespace Omu.ValueInjecter.Injections
 
         protected void Execute(PropertyInfo tp, object source, object target)
         {
-            if (tp.CanWrite)
+            if (tp.CanWrite && tp.GetSetMethod() != null)
             {
                 var endpoints = UberFlatter.Flat(tp.Name, source, (upn, prop) => Match(upn, prop, tp)).ToArray();
 
