@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Reflection;
 
+using Omu.ValueInjecter.Utils;
+
 namespace Omu.ValueInjecter.Injections
 {
     public class PropertyInjection : ValueInjection
@@ -16,17 +18,12 @@ namespace Omu.ValueInjecter.Injections
             this.ignoredProps = ignoredProps;
         }
 
-        protected bool IsNotIgnored(string property)
-        {
-            return ignoredProps == null || !ignoredProps.Contains(property);
-        }
-
         protected override void Inject(object source, object target)
         {
             var sourceProps = source.GetType().GetProps();
-            foreach (var s in sourceProps)
+            foreach (var sourceProp in sourceProps)
             {
-                Execute(s, source, target);
+                Execute(sourceProp, source, target);
             }
         }
 

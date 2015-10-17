@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+
+using Omu.ValueInjecter;
 
 namespace WinFormsFlattenSample
 {

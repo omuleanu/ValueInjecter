@@ -1,25 +1,25 @@
 ﻿using NUnit.Framework;
-using Omu.ValueInjecter;
+using Omu.ValueInjecter.Utils;
 
 using Tests.Utils;
 
 namespace Tests
 {
     [TestFixture]
-    public class ExtensionsTests
+    public class UtilsTests
     {
         [Test]
         public void RemovePrefix()
         {
             const string S = "txtName";
-            S.RemovePrefix("txt").IsEqualTo("Name");
+            StrUtil.RemovePrefix(S, "txt").IsEqualTo("Name");
         }
 
         [Test]
         public void RemoveSuffix()
         {
             const string S = "NameRaw";
-            S.RemoveSuffix("Raw").IsEqualTo("Name");
+            StrUtil.RemoveSuffix(S, "Raw").IsEqualTo("Name");
         }
     }
 }

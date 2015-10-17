@@ -1,4 +1,6 @@
-﻿namespace Omu.ValueInjecter.Injections
+﻿using Omu.ValueInjecter.Utils;
+
+namespace Omu.ValueInjecter.Injections
 {
     internal class SameNameType : ValueInjection
     {

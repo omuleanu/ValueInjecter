@@ -2,44 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
-namespace Omu.ValueInjecter
+namespace Omu.ValueInjecter.Utils
 {
     public static class Extensions
     {
-        public static string RemovePrefix(this string o, string prefix)
-        {
-            return o.RemovePrefix(prefix, StringComparison.Ordinal);
-        }
-
-        public static string RemovePrefix(this string o, string prefix, StringComparison comparison)
-        {
-            if (prefix == null) return o;
-            return !o.StartsWith(prefix, comparison) ? o : o.Remove(0, prefix.Length);
-        }
-
-        public static string RemoveSuffix(this string o, string suffix)
-        {
-            if(suffix == null) return o;
-            return !o.EndsWith(suffix) ? o : o.Remove(o.Length - suffix.Length, suffix.Length);
-        }
-
-        public static Boolean IsAnonymousType(this Type type)
-        {
-            var hasCompilerGeneratedAttribute = type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Length > 0;
-            var nameContainsAnonymousType = type.FullName.Contains("AnonymousType");
-            var isAnonymousType = hasCompilerGeneratedAttribute && nameContainsAnonymousType;
-
-            return isAnonymousType;
-        }
-
+        /// <summary>
+        /// Get properties
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
         public static PropertyInfo[] GetProps(this object o)
         {
             return o.GetType().GetProps();
         }
 
         /// <summary>
+        /// Get type properties, including properties of inherited interfaces
         /// http://stackoverflow.com/a/2444090/112100
         /// </summary>
         /// <param name="type"></param>

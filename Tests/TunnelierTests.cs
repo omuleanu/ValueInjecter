@@ -20,14 +20,14 @@ namespace Tests
         public void GetValueFromAUnfullBranchReturnNull()
         {
             var o = new Foo() { Parent = new Foo() { } };
-            Tunnelier.GetValue(new List<string>() { "Parent", "Parent", "Name" }, o).IsEqualTo(null);
+            Tunnelier.Find(new List<string>() { "Parent", "Parent", "Name" }, o).IsEqualTo(null);
         }
 
         [Test]
         public void GetValueReturns()
         {
             var o = new Foo { Parent = new Foo { Parent = new Foo { Name = "hey" } } };
-            var endpoint = Tunnelier.GetValue(new List<string>{"Parent", "Parent","Name"},o );
+            var endpoint = Tunnelier.Find(new List<string>{"Parent", "Parent","Name"}, o);
             endpoint.Property.GetValue(endpoint.Component).IsEqualTo("hey");
         }
 

@@ -80,7 +80,7 @@
     <Compile Include="LoopInjectionTests.cs" />
     <Compile Include="Misc\DanRyanIDataReaderTests.cs" />
     <Compile Include="EnumInjectionsTests.cs" />
-    <Compile Include="ExtensionsTests.cs" />
+    <Compile Include="UtilsTests.cs" />
     <Compile Include="FlatLoopInjectionTests.cs" />
     <Compile Include="FlatteningTest.cs" />
     <Compile Include="Misc\KohanTests.cs" />

@@ -2,9 +2,15 @@
 using System.Reflection;
 
 using Omu.ValueInjecter.Flat;
+using Omu.ValueInjecter.Utils;
 
 namespace Omu.ValueInjecter.Injections
 {
+    /// <summary>
+    /// FlatLoopInjection, matches unflat properties to flat ( a.b.c => abc )
+    /// override SetValue to control the how the value is set ( do type casting, ignore setting in certain scenarios etc. )
+    /// override Match to control unflat target checking
+    /// </summary>
     public class FlatLoopInjection : ValueInjection
     {
         protected override void Inject(object source, object target)
@@ -16,9 +22,9 @@ namespace Omu.ValueInjecter.Injections
             }
         }
 
-        protected virtual bool Match(string unflatName, PropertyInfo prop, PropertyInfo target)
+        protected virtual bool Match(string propName, PropertyInfo unflatProp, PropertyInfo targetFlatProp)
         {
-            return prop.PropertyType == target.PropertyType && unflatName == prop.Name && prop.GetGetMethod() != null;
+            return unflatProp.PropertyType == targetFlatProp.PropertyType && propName == unflatProp.Name && unflatProp.GetGetMethod() != null;
         }
 
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)

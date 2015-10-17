@@ -63,9 +63,9 @@ namespace Tests
 
         public class FlatBoolToString : FlatLoopInjection
         {
-            protected override bool Match(string unflatName, PropertyInfo prop, PropertyInfo target)
+            protected override bool Match(string propName, PropertyInfo unflatProp, PropertyInfo targetFlatProp)
             {
-                return unflatName == prop.Name && prop.PropertyType == typeof(bool) && target.PropertyType == typeof(string);
+                return propName == unflatProp.Name && unflatProp.PropertyType == typeof(bool) && targetFlatProp.PropertyType == typeof(string);
             }
 
             protected override void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)

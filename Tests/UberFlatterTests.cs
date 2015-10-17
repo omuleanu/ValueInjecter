@@ -98,7 +98,7 @@ namespace Tests
         [Test]
         public void GetTrails()
         {
-            var l = TrailFinder.GetTrails("TheFooBarName", typeof(Unflat).GetProperties().Single(o => o.Name == "The"), Match, new List<string>(), StringComparison.Ordinal).ToList();
+            var l = TrailFinder.GetTrails("TheFooBarName", typeof(Unflat).GetProperties(), Match, StringComparison.Ordinal).ToList();
             l.Count.IsEqualTo(2);
         }
 

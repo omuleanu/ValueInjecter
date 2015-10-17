@@ -4,6 +4,12 @@ using System.Reflection;
 
 namespace Omu.ValueInjecter.Injections
 {
+    /// <summary>
+    /// LoopInjection, by default will match properties with the same name and type;
+    /// override MatchTypes to change type matching;
+    /// override GetTargetProp to change how the target property is determined based on the source property;
+    /// override SetValue to control the how the value is set ( do type casting, ignore setting in certain scenarios etc. )
+    /// </summary>
     public class LoopInjection : PropertyInjection
     {
         public LoopInjection()

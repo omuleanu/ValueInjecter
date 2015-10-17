@@ -95,9 +95,9 @@ namespace Tests
 
         public class StrToIntUnflat : UnflatLoopInjection
         {
-            protected override bool Match(string unflatName, PropertyInfo prop, PropertyInfo sourceProp)
+            protected override bool Match(string propName, PropertyInfo unflatProp, PropertyInfo sourceFlatProp)
             {
-                return unflatName == prop.Name && prop.PropertyType == typeof(int) && sourceProp.PropertyType == typeof(string);
+                return propName == unflatProp.Name && unflatProp.PropertyType == typeof(int) && sourceFlatProp.PropertyType == typeof(string);
             }
 
             protected override void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Omu.ValueInjecter;
 using Omu.ValueInjecter.Injections;
+using Omu.ValueInjecter.Utils;
 
 namespace DALSample
 {
@@ -49,7 +50,8 @@ namespace DALSample
                 else
                     s += string.Format(format, prop.Name) + glue;
             }
-            s = s.RemoveSuffix(glue);
+
+            s = StrUtil.RemoveSuffix(s, glue);
             target += s;
         }
     }

@@ -3,9 +3,15 @@ using System.Linq;
 using System.Reflection;
 
 using Omu.ValueInjecter.Flat;
+using Omu.ValueInjecter.Utils;
 
 namespace Omu.ValueInjecter.Injections
 {
+    /// <summary>
+    /// UnflatLoopInjection, matches flat properties to unflat ( abc => a.b.c );
+    /// override SetValue to control the how the value is set ( do type casting, ignore setting in certain scenarios etc. );
+    /// override Match to control unflat target checking;
+    /// </summary>
     public class UnflatLoopInjection : ValueInjection
     {
         protected Func<PropertyInfo, object, object> activator;
@@ -14,6 +20,10 @@ namespace Omu.ValueInjecter.Injections
         {
         }
 
+        /// <summary>
+        /// Create injection and set the creator func
+        /// </summary>
+        /// <param name="activator">creator func, used to create objects along the way if null is encountered, by default Activator.CreateIntance is used</param>
         public UnflatLoopInjection(Func<PropertyInfo, object, object> activator)
         {
             this.activator = activator;
@@ -28,9 +38,9 @@ namespace Omu.ValueInjecter.Injections
             }
         }
 
-        protected virtual bool Match(string unflatName, PropertyInfo prop, PropertyInfo sourceProp)
+        protected virtual bool Match(string propName, PropertyInfo unflatProp, PropertyInfo sourceFlatProp)
         {
-            return prop.PropertyType == sourceProp.PropertyType && unflatName == prop.Name && prop.GetSetMethod() != null;
+            return unflatProp.PropertyType == sourceFlatProp.PropertyType && propName == unflatProp.Name && unflatProp.GetSetMethod() != null;
         }
 
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)

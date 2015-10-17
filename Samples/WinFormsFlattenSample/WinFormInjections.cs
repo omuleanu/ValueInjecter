@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Omu.ValueInjecter;
 using Omu.ValueInjecter.Flat;
 using Omu.ValueInjecter.Injections;
+using Omu.ValueInjecter.Utils;
 
 namespace WinFormsFlattenSample
 {
@@ -51,7 +52,7 @@ namespace WinFormsFlattenSample
             {
                 if (control.Text == string.Empty) continue;
 
-                var endpoints = UberFlatter.Unflat(control.Name.RemovePrefix("txt"), target);
+                var endpoints = UberFlatter.Unflat(StrUtil.RemovePrefix(control.Name, "txt"), target);
                 if(endpoints.Count() == 0) continue;
 
                 var desc = endpoints.First();
@@ -76,7 +77,7 @@ namespace WinFormsFlattenSample
         {
             foreach (var txt in target.GetChildControls())
             {
-                var es = UberFlatter.Flat(txt.Name.RemovePrefix("txt"), source);
+                var es = UberFlatter.Flat(StrUtil.RemovePrefix(txt.Name, "txt"), source);
                 if (es.Count() == 0) continue;
                 var desc = es.First();
                 txt.Text = (desc.Property.GetValue(desc.Component) ?? "").ToString();
@@ -90,7 +91,7 @@ namespace WinFormsFlattenSample
         {
             foreach (DateTimePicker dt in request.GetChildControls<DateTimePicker>())
             {
-                var es = UberFlatter.Unflat(dt.Name.RemovePrefix("dt"), target);
+                var es = UberFlatter.Unflat(StrUtil.RemovePrefix(dt.Name, "dt"), target);
                 if(es.Count() == 0) continue;
                 var desc = es.First();
                 desc.Property.SetValue(desc.Component, dt.Value);

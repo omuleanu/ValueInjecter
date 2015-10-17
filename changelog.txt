@@ -5,7 +5,6 @@ version 3.1
  - private get and set is not being used by default
 
 version 3.0
-==========================
  - added Mapper
  - added LoopInjection, PropertyInjection
  - added FlatLoopInject, UnflatLoopInjection

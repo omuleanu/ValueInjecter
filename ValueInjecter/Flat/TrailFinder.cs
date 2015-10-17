@@ -3,42 +3,61 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using Omu.ValueInjecter.Utils;
+
 namespace Omu.ValueInjecter.Flat
 {
     public static class TrailFinder
     {
-        public static IEnumerable<IList<string>> GetTrails(string upn, IEnumerable<PropertyInfo> props, Func<string, PropertyInfo, bool> match, StringComparison comparison, bool flat = true)
+        /// <summary>
+        /// Get all possible trails based on the property name
+        /// </summary>
+        /// <param name="flatPropertyName">flat property name</param>
+        /// <param name="lookupProps">properties to look into</param>
+        /// <param name="match">match func used for checking the last property in the trail</param>
+        /// <param name="comparison">StringComparison type used for building the flat trail</param>
+        /// <param name="forFlattening">getting trails for flattening or unflattening, in the first case we need to make sure the properties are readable in the latter writeable</param>
+        /// <returns>all possible trails</returns>
+        public static IEnumerable<IList<string>> GetTrails(
+            string flatPropertyName,
+            IEnumerable<PropertyInfo> lookupProps,
+            Func<string, PropertyInfo, bool> match,
+            StringComparison comparison,
+            bool forFlattening = true)
         {
-            return props.SelectMany(prop => GetTrails(upn, prop, match, new List<string>(), comparison, flat));
+            return lookupProps.SelectMany(lookupProp => GetTrailsForProperty(flatPropertyName, lookupProp, match, comparison, forFlattening));
         }
 
-        public static IEnumerable<IList<string>> GetTrails(string upn, PropertyInfo prop, Func<string, PropertyInfo, bool> match, IList<string> root, StringComparison comparison, bool flat = true)
+        private static IEnumerable<IList<string>> GetTrailsForProperty(
+            string flatPropName, 
+            PropertyInfo lookupProp, 
+            Func<string, PropertyInfo, bool> match,
+            StringComparison comparison, 
+            bool forFlattening = true)
         {
-            if (flat && !prop.CanRead || !flat && !prop.CanWrite)
+            if (forFlattening && !lookupProp.CanRead || !forFlattening && !lookupProp.CanWrite)
             {
                 yield return null;
                 yield break;
             }
 
-            if (match(upn, prop))
+            if (match(flatPropName, lookupProp))
             {
-                var l = new List<string> { prop.Name };
-                yield return l;
+                yield return new List<string> { lookupProp.Name };
                 yield break;
             }
 
-            if (upn.StartsWith(prop.Name, comparison))
+            if (flatPropName.StartsWith(lookupProp.Name, comparison))
             {
-                root.Add(prop.Name);
-                foreach (var pro in prop.PropertyType.GetProps())
+                foreach (var pro in lookupProp.PropertyType.GetProps())
                 {
-                    foreach (var trail in GetTrails(upn.RemovePrefix(prop.Name, comparison), pro, match, root, comparison, flat))
+                    foreach (var trail in GetTrailsForProperty(StrUtil.RemovePrefix(flatPropName, lookupProp.Name, comparison), pro, match, comparison, forFlattening))
                     {
                         if (trail != null)
                         {
-                            var r = new List<string> { prop.Name };
-                            r.AddRange(trail);
-                            yield return r;
+                            var result = new List<string> { lookupProp.Name };
+                            result.AddRange(trail);
+                            yield return result;
                         }
                     }
                 }

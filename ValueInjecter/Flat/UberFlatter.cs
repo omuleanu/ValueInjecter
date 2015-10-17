@@ -3,46 +3,96 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using Omu.ValueInjecter.Utils;
+
 namespace Omu.ValueInjecter.Flat
 {
     /// <summary>
-    /// performs flattening and unflattening
+    /// performs flattening and unflattening; 
+    /// flattening = from a.b.c to abc;
+    /// unflattening = from abc to a.b.c (if b is null new object is created and assigned);
+    /// it's possible to have multiple matches abc => [a.b.c, ab.c a.bc], which is why all methods return a collection of targets;
     /// first version of this class was made by Vadim Plamadeala ☺
     /// </summary>
     public static class UberFlatter
     {
-        public static IEnumerable<PropertyWithComponent> Unflat(string flatPropertyName, object target, Func<string, PropertyInfo, bool> match, StringComparison comparison, Func<PropertyInfo, object, object> activator = null)
+        /// <summary>
+        /// Get unflat targets for given flatPropertyName, objects will be created if null encountered in the path towards the target, you can set the value from flatProperty into the target(s)
+        /// </summary>
+        /// <param name="flatPropertyName">flat property name</param>
+        /// <param name="lookupObject">object to look for targets into</param>
+        /// <param name="match">match func used for checking the last property in the trail</param>
+        /// <param name="comparison"></param>
+        /// <param name="activator">creator func, used to create objects along the way if null is encountered, by default Activator.CreateIntance is used</param>
+        /// <returns>all matching unflat targets info</returns>
+        public static IEnumerable<PropertyWithComponent> Unflat(string flatPropertyName, object lookupObject, Func<string, PropertyInfo, bool> match, StringComparison comparison, Func<PropertyInfo, object, object> activator = null)
         {
-            var trails = TrailFinder.GetTrails(flatPropertyName, target.GetType().GetProps(), match, comparison, false).Where(o => o != null);
+            var trails = TrailFinder.GetTrails(flatPropertyName, lookupObject.GetType().GetProps(), match, comparison, false).Where(o => o != null);
 
-            return trails.Select(trail => Tunnelier.Digg(trail, target, activator));
+            return trails.Select(trail => Tunnelier.Digg(trail, lookupObject, activator));
         }
 
-        public static IEnumerable<PropertyWithComponent> Unflat(string flatPropertyName, object target, Func<string, PropertyInfo, bool> match, Func<PropertyInfo, object, object> activator = null)
+        /// <summary>
+        /// Get unflat targets for given flatPropertyName, objects will be created if null encountered in the path towards the target, you can set the value from flatProperty into the target(s)
+        /// </summary>
+        /// <param name="flatPropertyName">flat property name</param>
+        /// <param name="lookupObject">object to look for targets into</param>
+        /// <param name="match">match func used for checking the last property in the trail</param>
+        /// <param name="activator">creator func, used to create objects along the way if null is encountered, by default Activator.CreateIntance is used</param>
+        /// <returns>all matching unflat targets info</returns>
+        public static IEnumerable<PropertyWithComponent> Unflat(string flatPropertyName, object lookupObject, Func<string, PropertyInfo, bool> match, Func<PropertyInfo, object, object> activator = null)
         {
-            return Unflat(flatPropertyName, target, match, StringComparison.Ordinal, activator);
+            return Unflat(flatPropertyName, lookupObject, match, StringComparison.Ordinal, activator);
         }
 
-        public static IEnumerable<PropertyWithComponent> Unflat(string flatPropertyName, object target, Func<PropertyInfo, object, object> activator = null)
+        /// <summary>
+        /// Get unflat targets for given flatPropertyName, objects will be created if null encountered in the path towards the target, you can set the value from flatProperty into the target(s)
+        /// </summary>
+        /// <param name="flatPropertyName">flat property name</param>
+        /// <param name="lookupObject">object to look for targets into</param>
+        /// <param name="activator">creator func, used to create objects along the way if null is encountered, by default Activator.CreateIntance is used</param>
+        /// <returns>all matching unflat targets info</returns>
+        public static IEnumerable<PropertyWithComponent> Unflat(string flatPropertyName, object lookupObject, Func<PropertyInfo, object, object> activator = null)
         {
-            return Unflat(flatPropertyName, target, (upn, pi) => upn == pi.Name, activator);
+            return Unflat(flatPropertyName, lookupObject, (upn, pi) => upn == pi.Name, activator);
         }
 
-        public static IEnumerable<PropertyWithComponent> Flat(string flatPropertyName, object source, Func<string, PropertyInfo, bool> match)
+        /// <summary>
+        /// Get unflat targets for given flatPropertyName, you can use the result to get value from and set it into the flat property
+        /// </summary>
+        /// <param name="flatPropertyName">flat property name</param>
+        /// <param name="lookupObject">object to look for targets into</param>
+        /// <param name="match">match func used for checking the last property in the trail</param>
+        /// <returns>all matching unflat targets info</returns>
+        public static IEnumerable<PropertyWithComponent> Flat(string flatPropertyName, object lookupObject, Func<string, PropertyInfo, bool> match)
         {
-            return Flat(flatPropertyName, source, match, StringComparison.Ordinal);
+            return Flat(flatPropertyName, lookupObject, match, StringComparison.Ordinal);
         }
 
-        public static IEnumerable<PropertyWithComponent> Flat(string flatPropertyName, object source, Func<string, PropertyInfo, bool> match, StringComparison comparison)
+        /// <summary>
+        /// Get unflat targets for given flatPropertyName, you can use the result to get value from and set it into the flat property
+        /// </summary>
+        /// <param name="flatPropertyName">flat property name</param>
+        /// <param name="lookupObject">object to look for targets into</param>
+        /// <param name="match">match func used for checking the last property in the trail</param>
+        /// <param name="comparison">StringComparison type used for building the flat trail</param>
+        /// <returns>all matching unflat targets info</returns>
+        public static IEnumerable<PropertyWithComponent> Flat(string flatPropertyName, object lookupObject, Func<string, PropertyInfo, bool> match, StringComparison comparison)
         {
-            var trails = TrailFinder.GetTrails(flatPropertyName, source.GetType().GetProps(), match, comparison).Where(o => o != null);
+            var trails = TrailFinder.GetTrails(flatPropertyName, lookupObject.GetType().GetProps(), match, comparison).Where(o => o != null);
 
-            return trails.Select(trail => Tunnelier.GetValue(trail, source));
+            return trails.Select(trail => Tunnelier.Find(trail, lookupObject));
         }
 
-        public static IEnumerable<PropertyWithComponent> Flat(string flatPropertyName, object source)
+        /// <summary>
+        /// Get unflat targets for given flatPropertyName, you can use the result to get value from and set it into the flat property
+        /// </summary>
+        /// <param name="flatPropertyName">flat property name</param>
+        /// <param name="lookupObject">object to look for targets into</param>
+        /// <returns>all matching unflat targets info</returns>
+        public static IEnumerable<PropertyWithComponent> Flat(string flatPropertyName, object lookupObject)
         {
-            return Flat(flatPropertyName, source, (up, pi) => up == pi.Name);
+            return Flat(flatPropertyName, lookupObject, (up, pi) => up == pi.Name);
         }
     }
 }
