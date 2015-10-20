@@ -100,4 +100,4 @@ deep cloning sample [here](https://github.com/omuleanu/ValueInjecter/blob/dae795
 
 for ASP.net MVC see http://prodinner.codeplex.com
 
-questions: http://stackoverflow.com/questions/tagged/valueinjecter
+**questions:** http://stackoverflow.com/questions/tagged/valueinjecter
