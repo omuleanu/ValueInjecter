@@ -45,7 +45,7 @@ namespace Omu.ValueInjecter.Injections
 
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
         {
-            tp.SetValue(target, sp.GetValue(source));
+            tp.SetValue(target, sp.GetValue(source, null), null);
         }
 
         protected virtual void Execute(PropertyInfo sp, object source, object target)

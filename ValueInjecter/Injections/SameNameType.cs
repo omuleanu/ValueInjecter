@@ -18,7 +18,7 @@ namespace Omu.ValueInjecter.Injections
 
                     if (tp != null && tp.CanWrite && sp.PropertyType == tp.PropertyType && tp.GetSetMethod() != null)
                     {
-                        tp.SetValue(target, sp.GetValue(source));
+                        tp.SetValue(target, sp.GetValue(source, null), null);
                     }
                 }
             }

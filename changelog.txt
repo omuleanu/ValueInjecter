@@ -1,3 +1,9 @@
+version 3.1.1
+ - added missing xml docs
+ - moved util classes to Utils namespace
+ - code optimizations
+ - rename Tunnelier GetValue method to Find
+
 version 3.1
  - added MapperInstance
  - added activator parameter for UnflatLoopInjection and Tunnerlier Digg method

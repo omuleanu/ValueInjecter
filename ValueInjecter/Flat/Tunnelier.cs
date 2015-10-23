@@ -23,13 +23,13 @@ namespace Omu.ValueInjecter.Flat
 
             var prop = type.GetProperty(trail[0]);
 
-            var val = prop.GetValue(target);
+            var val = prop.GetValue(target, null);
 
             if (val == null)
             {
                 val = activator == null ? Activator.CreateInstance(prop.PropertyType) : activator(prop, target);
 
-                prop.SetValue(target, val);
+                prop.SetValue(target, val, null);
             }
 
             trail.RemoveAt(0);
@@ -57,7 +57,7 @@ namespace Omu.ValueInjecter.Flat
             }
 
             var prop = type.GetProperty(trail[0]);
-            var val = prop.GetValue(target);
+            var val = prop.GetValue(target, null);
             if (val == null) return null;
             trail.RemoveAt(0);
             return FindTargetInfo(trail, val, level + 1);
