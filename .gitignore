@@ -111,5 +111,3 @@ UpgradeLog*.XML
 *.sln.DotSettings
 temp
 Meals
-Omu.ValueInjecter.dll
-Omu.ValueInjecter.xml
