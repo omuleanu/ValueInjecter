@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WpfSample
+namespace UniversalSample
 {
     public class Valid
     {
