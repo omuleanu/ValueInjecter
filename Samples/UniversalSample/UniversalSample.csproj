@@ -134,7 +134,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ValueInjecter-Universal\ValueInjecter-Universal.csproj">
+    <ProjectReference Include="..\..\ValueInjecter-Universal\ValueInjecter-Universal.csproj">
       <Project>{f8d617cd-0f52-4b41-b5e2-419565da4b8a}</Project>
       <Name>ValueInjecter-Universal</Name>
     </ProjectReference>
