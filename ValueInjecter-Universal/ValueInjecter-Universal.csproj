@@ -131,7 +131,9 @@
     <Compile Include="StaticValueInjecter.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\StrUtil.cs" />
-    <Content Include="Properties\ValueInjecter_Universal.rd.xml" />
+    <EmbeddedResource Include="Properties\ValueInjecter_Universal.rd.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
