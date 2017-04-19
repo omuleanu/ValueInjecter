@@ -1,6 +1,6 @@
 get via nuget **[ValueInjecter](https://www.nuget.org/packages/ValueInjecter/)** or download [here](https://valueinjecter.codeplex.com/downloads/get/1591914)
 
-####usage
+#### usage
 ``` ruby
 var customerInput = Mapper.Map<CustomerInput>(customer); 
 ```
@@ -12,7 +12,7 @@ var customerInput = Mapper.Map<Customer, CustomerInput>(customer);
 
 by default it will only map properties with the exact same name and type (this can be changed)
 
-####custom maps 
+#### custom maps 
 can be added, like this:
 ``` ruby
 Mapper.AddMap<Customer, CustomerInput>(src =>
@@ -23,7 +23,7 @@ Mapper.AddMap<Customer, CustomerInput>(src =>
     return res;
 });
 ```
-####InjectFrom
+#### InjectFrom
 `InjectFrom<TInjection>(source)` is used to map using a convention, when `TInjection` is not specified it will map properties with exact same name and type
 
 it's used like this:
@@ -37,7 +37,7 @@ you can create you own injections by inheriting `LoopInjection`, `PropertyInject
 
 see some examples of custom injections here: [injections examples] (https://github.com/omuleanu/ValueInjecter/wiki/custom-injections-examples)
 
-####Additional parameters
+#### Additional parameters
 an additional parameter can be set when mapping:
 ``` ruby
 var customer = Mapper.Map<Customer>(foo, new MyClass { Title = "hi" });
@@ -58,10 +58,10 @@ when using InjectFrom additional parameters can be sent to the injection:
 ```
 in this case LoopInjection will ignore "FirstName" property; you can add private fields to your custom injections and give them value via the constructor as shown above
 
-####Flattening and unflattening
+#### Flattening and unflattening
 you can use `FlatLoopInjection` and `UnflatLoopInjection` directly or inherit them, you can also use the `UberFlatter` class in you custom injections, have look at the source code for these injections.
 
-####Default map
+#### Default map
 By default `Mapper.Map` will only map properties with the exact same name and type, this can be changed by setting `Mapper.DefaultMap`, here's an example:
 
 ``` ruby
@@ -73,13 +73,13 @@ By default `Mapper.Map` will only map properties with the exact same name and ty
     };
 ```
 
-####Default InjectFrom
+#### Default InjectFrom
 You can change the default injection by setting 
 ``` ruby
     StaticValueInjecter.DefaultInjection = new MyInjection();
 ```
     
-####Multiple mappers
+#### Multiple mappers
 Multiple mappers with different configurations can be used by creating multiple instances of MapperInstance
 ``` ruby
 	var mapper1 = new MapperInstance();
@@ -93,7 +93,7 @@ Multiple mappers with different configurations can be used by creating multiple 
 ```
 you could store the instance in a static member, or use your IoC Container
 
-####Samples
+#### Samples
 there's samples in the source code for winforms, ASP.net web-forms, DAL, and wpf
 
 deep cloning sample [here](https://github.com/omuleanu/ValueInjecter/blob/dae7956439cac8516979fe254a520a1942c5cdeb/Tests/Cloning.cs), and the [CloneInjection](https://github.com/omuleanu/ValueInjecter/blob/master/Tests/Injections/CloneInjection.cs)
