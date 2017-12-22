@@ -97,14 +97,25 @@ You can change the default injection by setting
 #### Multiple mappers
 Multiple mappers with different configurations can be used by creating multiple instances of MapperInstance
 ``` ruby
-	var mapper1 = new MapperInstance();
-	mapper1.AddMap<Customer, Customer>(o => new Customer { FirstName = "mapper1" });
-	
-	var mapper2 = new MapperInstance();
-	mapper2.AddMap<Customer, Customer>(o => new Customer { FirstName = "mapper2" });	
+var mapper1 = new MapperInstance();
+var mapper2 = new MapperInstance();
 
-	var m1 = mapper1.Map<Customer>(customer);
-	var m2 = mapper2.Map<Customer>(customer);
+mapper1.AddMap<Customer, CustomerInput>((from) =>
+{
+    var input = new CustomerInput();
+    input.InjectFrom(from);
+    return input;
+});
+
+mapper2.AddMap<Customer, CustomerInput>((from) =>
+{
+    var input = new CustomerInput();
+    input.FirstName = from.FirstName;
+    return input;
+});
+
+var input1 = mapper1.Map<CustomerInput>(customer);
+var input2 = mapper2.Map<CustomerInput>(customer); // has only FirstName set
 ```
 you could store the instance in a static member, or use your IoC Container
 
