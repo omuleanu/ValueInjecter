@@ -23,6 +23,21 @@ Mapper.AddMap<Customer, CustomerInput>(src =>
     return res;
 });
 ```
+
+#### map to existing object
+``` ruby
+Mapper.AddMap<Customer, Customer>((from, tag) =>
+{
+    var existing = tag as Customer;
+    existing.InjectFrom(from);
+    return existing;
+});
+
+var customer = GetCustomer();
+var res = new Customer();
+
+Mapper.Map<Customer>(customer, res);
+```
 #### InjectFrom
 `InjectFrom<TInjection>(source)` is used to map using a convention, when `TInjection` is not specified it will map properties with exact same name and type
 
