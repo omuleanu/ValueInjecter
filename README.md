@@ -6,18 +6,19 @@ var customerInput = Mapper.Map<CustomerInput>(customer);
 ```
 or like this:
 ``` ruby
+// in previous example type of the source (from) was being inferred from the `customer` variable
 var customerInput = Mapper.Map<Customer, CustomerInput>(customer); 
 ```
 (useful when working with EF proxy objects)
 
-by default it will only map properties with the exact same name and type (this can be changed)
+by default it will only map properties with the exact same name and type, but this can be changed by adding custom maps for types that have different properties
 
 #### custom maps 
 can be added, like this:
 ``` ruby
-Mapper.AddMap<Customer, CustomerInput>(src =>
+Mapper.AddMap<FromType, ResType>(src =>
 {
-    var res = new CustomerInput();
+    var res = new ResType();
     res.InjectFrom(src); // maps properties with same name and type
     res.FullName = src.FirstName + " " + src.LastName;
     return res;
@@ -89,6 +90,7 @@ This default map will only map properties with the exact same name and type, thi
         return res;
     };
 ```
+So if you call `Mapper.Map<Customer>(customerInput)` and before you've created a map using Mapper.AddMap<CustomerInput, Customer>
 
 #### Default InjectFrom
 You can change the default injection by setting 
