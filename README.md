@@ -6,7 +6,7 @@ var customerInput = Mapper.Map<CustomerInput>(customer);
 ```
 or like this:
 ``` ruby
-// in previous example type of the source (from) was being inferred from the `customer` variable
+//# in previous example type of the source (from) was being inferred from the `customer` variable
 var customerInput = Mapper.Map<Customer, CustomerInput>(customer); 
 ```
 (useful when working with EF proxy objects)
