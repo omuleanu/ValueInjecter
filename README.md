@@ -77,11 +77,13 @@ in this case LoopInjection will ignore "FirstName" property; you can add private
 you can use `FlatLoopInjection` and `UnflatLoopInjection` directly or inherit them, you can also use the `UberFlatter` class in you custom injections, have look at the source code for these injections.
 
 #### Default map
-By default `Mapper.Map` will only map properties with the exact same name and type, this can be changed by setting `Mapper.DefaultMap`, here's an example:
+For pairs of types that don't have a mapping created using `Mapper.AddMap`, there's a default map being used.
+This default map will only map properties with the exact same name and type, this can be changed by setting `Mapper.DefaultMap`, here's an example that sets the default map:
 
 ``` ruby
     Mapper.DefaultMap = (src, resType, tag) =>
     {
+        // this is the source code of default map 
         var res = Activator.CreateInstance(resType);
         res.InjectFrom(src);
         return res;
