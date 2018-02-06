@@ -1,5 +1,4 @@
-get via nuget **[ValueInjecter](https://www.nuget.org/packages/ValueInjecter/)** or download [here](https://valueinjecter.codeplex.com/downloads/get/1591914)
-
+get via nuget **[ValueInjecter](https://www.nuget.org/packages/ValueInjecter/)** 
 #### usage
 ``` ruby
 var customerInput = Mapper.Map<CustomerInput>(customer); 
