@@ -7,6 +7,9 @@ using Omu.ValueInjecter.Utils;
 
 namespace Omu.ValueInjecter.Flat
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class TrailFinder
     {
         /// <summary>

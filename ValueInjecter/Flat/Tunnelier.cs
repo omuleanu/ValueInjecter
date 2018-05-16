@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace Omu.ValueInjecter.Flat
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Tunnelier
     {
         /// <summary>

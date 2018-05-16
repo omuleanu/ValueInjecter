@@ -20,6 +20,14 @@ namespace Tests
             Mapper.Reset();
         }
 
+        /*
+00:00:00.0047360 one
+00:00:00.0363449 <T,T>
+00:00:00.0395060 loop
+00:00:00.0000163 one
+00:00:00.0006451 manual
+             */
+
         [Test]
         public void PerformanceCheck()
         {
@@ -135,6 +143,53 @@ namespace Tests
             Assert.AreEqual(customer.Id, c1.Id);
             Assert.AreEqual(customer.FirstName + P1, c1.FirstName);
             Assert.AreEqual(P1, c1.LastName);
+        }
+
+        [Test]
+        public void MapToExistingObj()
+        {
+            var customer = GetCustomer();
+            var res = new Customer();
+
+            Mapper.AddMap<Customer, Customer>((from, tag) =>
+            {
+                var existing = tag as Customer;
+                existing.InjectFrom(from);
+                return existing;
+            });
+
+            Mapper.Map<Customer>(customer, res);
+
+            Assert.AreEqual(customer.FirstName, res.FirstName);
+        }
+
+        [Test]
+        public void MapperInstance()
+        {
+            var customer = GetCustomer();
+
+            var mapper1 = new MapperInstance();
+            var mapper2 = new MapperInstance();
+            
+            mapper1.AddMap<Customer, CustomerInput>((from) =>
+            {
+                var input = new CustomerInput();
+                input.InjectFrom(from);
+                return input;
+            });
+
+            mapper2.AddMap<Customer, CustomerInput>((from) =>
+            {
+                var input = new CustomerInput();
+                input.FirstName = from.FirstName;
+                return input;
+            });
+
+            var input1 = mapper1.Map<CustomerInput>(customer);
+            var input2 = mapper2.Map<CustomerInput>(customer);
+
+            Assert.AreEqual(customer.LastName, input1.LastName);
+            Assert.AreEqual(null, input2.LastName);
         }
 
         [Test]

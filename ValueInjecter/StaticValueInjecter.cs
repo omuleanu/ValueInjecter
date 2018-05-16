@@ -1,4 +1,5 @@
 ﻿using Omu.ValueInjecter.Injections;
+using System.Reflection;
 
 namespace Omu.ValueInjecter
 {

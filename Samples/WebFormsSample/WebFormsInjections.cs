@@ -1,6 +1,5 @@
 ﻿using System.Web.UI;
 using System.Web.UI.WebControls;
-using Omu.ValueInjecter;
 using Omu.ValueInjecter.Injections;
 
 namespace WebFormsSample

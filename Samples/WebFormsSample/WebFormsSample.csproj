@@ -24,6 +24,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,13 +82,13 @@
     <Compile Include="WebFormsInjections.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ValueInjecter\ValueInjecter.csproj">
-      <Project>{3C3ED7E4-062D-4C4F-A0E1-8F1A1EFCE1B6}</Project>
-      <Name>ValueInjecter</Name>
-    </ProjectReference>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <ProjectReference Include="..\..\ValueInjecter\ValueInjecter.csproj">
+      <Project>{1ce448b5-73d9-4355-a0e8-6f41b7671846}</Project>
+      <Name>ValueInjecterCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -25,7 +25,7 @@ namespace Omu.ValueInjecter.Utils
         /// <returns></returns>
         public static PropertyInfo[] GetProps(this Type type)
         {
-            if (type.IsInterface)
+            if (type.IsInterface())
             {
                 var propertyInfos = new List<PropertyInfo>();
 

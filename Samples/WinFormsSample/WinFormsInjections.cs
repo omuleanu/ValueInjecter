@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using Omu.ValueInjecter;
 using Omu.ValueInjecter.Injections;
 
 namespace WinFormsSample
