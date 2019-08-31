@@ -103,12 +103,26 @@ namespace Tests
         }
 
         [Test]
+        public void GetTrailsByObject()
+        {
+            var l = TrailFinder.GetTrails("TheFooBarName", new Unflat(), Match, StringComparison.Ordinal).ToList();
+            l.Count.IsEqualTo(2);
+        }
+
+        [Test]
         public void GetAllTrails()
         {
             var l = TrailFinder.GetTrails("The2FooBarName", typeof(Unflat).GetProperties(), Match, StringComparison.Ordinal);
             l.Count().IsEqualTo(2);
         }
-        
+
+        [Test]
+        public void GetAllTrailsByObject()
+        {
+            var l = TrailFinder.GetTrails("The2FooBarName", new Unflat(), Match, StringComparison.Ordinal);
+            l.Count().IsEqualTo(2);
+        }
+
         [Test]
         public void Speed()
         {

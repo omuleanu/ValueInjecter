@@ -95,5 +95,26 @@ namespace Tests
             flat.Parentb.IsEqualTo("True");
             flat.Bool.IsEqualTo(null);
         }
+
+        [Test]
+        public void ObjectFlatTest()
+        {
+            var f = new
+            {
+                Parent = (object)new Foo
+                {
+                    _a = "aaa",
+                    a = 23,
+                    b = true,
+                    Name = "v"
+                }
+            };
+
+            var flat = new Flat();
+
+            flat.InjectFrom<FlatBoolToString>(f);
+            flat.Parentb.IsEqualTo("True");
+            flat.Bool.IsEqualTo(null);
+        }
     }
 }
