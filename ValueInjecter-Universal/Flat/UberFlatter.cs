@@ -27,7 +27,7 @@ namespace Omu.ValueInjecter.Flat
         /// <returns>all matching unflat targets info</returns>
         public static IEnumerable<PropertyWithComponent> Unflat(string flatPropertyName, object lookupObject, Func<string, PropertyInfo, bool> match, StringComparison comparison, Func<PropertyInfo, object, object> activator = null)
         {
-            var trails = TrailFinder.GetTrails(flatPropertyName, lookupObject.GetType().GetProps(), match, comparison, false).Where(o => o != null);
+            var trails = TrailFinder.GetTrails(flatPropertyName, lookupObject, match, comparison, false).Where(o => o != null);
 
             return trails.Select(trail => Tunnelier.Digg(trail, lookupObject, activator));
         }
@@ -79,7 +79,7 @@ namespace Omu.ValueInjecter.Flat
         /// <returns>all matching unflat targets info</returns>
         public static IEnumerable<PropertyWithComponent> Flat(string flatPropertyName, object lookupObject, Func<string, PropertyInfo, bool> match, StringComparison comparison)
         {
-            var trails = TrailFinder.GetTrails(flatPropertyName, lookupObject.GetType().GetProps(), match, comparison).Where(o => o != null);
+            var trails = TrailFinder.GetTrails(flatPropertyName, lookupObject, match, comparison).Where(o => o != null);
 
             return trails.Select(trail => Tunnelier.Find(trail, lookupObject));
         }
