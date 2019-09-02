@@ -39,7 +39,8 @@ namespace Omu.ValueInjecter.Flat
         /// <param name="lookupObject">object whose properties to look into</param>
         /// <param name="match">match func used for checking the last property in the trail</param>
         /// <param name="comparison">StringComparison type used for building the flat trail</param>
-        /// <param name="forFlattening">getting trails for flattening or unflattening, in the first case we need to make sure the properties are readable in the latter writeable</param>
+        /// <param name="forFlattening">getting trails for flattening or unflattening,
+        /// in the first case we need to make sure the properties are readable in the latter writeable</param>
         /// <returns>all possible trails</returns>
         public static IEnumerable<IList<string>> GetTrails(
             string flatPropertyName,

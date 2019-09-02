@@ -1,3 +1,6 @@
+version 3.2
+ - can flatten/unflatten instances with object type properties, UberFlatter Flat and Unflat methods will take an instance of the lookup object instead of a collection of PropertyInfo
+
 version 3.1.1
  - added missing xml docs
  - moved util classes to Utils namespace
