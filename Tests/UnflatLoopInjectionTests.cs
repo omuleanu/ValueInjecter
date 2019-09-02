@@ -59,10 +59,10 @@ namespace Tests
         public void ObjectUnflatTest()
         {
             var flat = (object)new { FooBarNumber = "123" };
-            var foo = new UnflatType();
+            var unflat = new UnflatType();
 
-            foo.InjectFrom<StrToIntUnflat>(flat);
-            Assert.AreEqual(123, (foo.Foo as Foo).Bar.Number);
+            unflat.InjectFrom<StrToIntUnflat>(flat);
+            Assert.AreEqual(123, (unflat.Foo as Foo).Bar.Number);
         }
 
         public class FlatType

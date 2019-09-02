@@ -23,7 +23,7 @@ namespace Tests
             public bool Bool { get; set; }
         }
 
-        public class Flat
+        public class FlatFoo
         {
             public string ParentName { get; set; }
             public int Parenta { get; set; }
@@ -35,37 +35,16 @@ namespace Tests
             public object Bool { get; set; }
         }
 
-        [Test]
-        public void FlatTest()
-        {
-            var f = new Foo
-                        {
-                            Parent = new Foo
-                                         {
-                                             _a = "aaa",
-                                             a = 23,
-                                             b = true,
-                                             Name = "v"
-                                         }
-                        };
-
-            var flat = new Flat();
-
-            flat.InjectFrom<FlatLoopInjection>(f);
-            flat.Parent_a.IsEqualTo(f.Parent._a);
-            flat.Parenta.IsEqualTo(f.Parent.a);
-            flat.Parentb.IsEqualTo(null);
-            flat.ParentName.IsEqualTo(f.Parent.Name);
-            flat.ParentParentName.IsEqualTo(null);
-            flat.oO.IsEqualTo(null);
-            flat.d.IsEqualTo(null);
-        }
-
+        /// <summary>
+        /// copy only bool properties into equivalent flattened property
+        /// </summary>
         public class FlatBoolToString : FlatLoopInjection
         {
             protected override bool Match(string propName, PropertyInfo unflatProp, PropertyInfo targetFlatProp)
             {
-                return propName == unflatProp.Name && unflatProp.PropertyType == typeof(bool) && targetFlatProp.PropertyType == typeof(string);
+                return propName == unflatProp.Name && 
+                    unflatProp.PropertyType == typeof(bool) && 
+                    targetFlatProp.PropertyType == typeof(string);
             }
 
             protected override void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
@@ -76,9 +55,9 @@ namespace Tests
         }
 
         [Test]
-        public void GenericFlatTest()
+        public void FlatteningTest()
         {
-            var f = new Foo
+            var unflat = new Foo
             {
                 Parent = new Foo
                 {
@@ -89,19 +68,24 @@ namespace Tests
                 }
             };
 
-            var flat = new Flat();
+            var flat = new FlatFoo();
 
-            flat.InjectFrom<FlatBoolToString>(f);
-            flat.Parentb.IsEqualTo("True");
-            flat.Bool.IsEqualTo(null);
+            flat.InjectFrom<FlatLoopInjection>(unflat);
+            flat.Parent_a.IsEqualTo(unflat.Parent._a);
+            flat.Parenta.IsEqualTo(unflat.Parent.a);
+            flat.Parentb.IsEqualTo(null);
+            flat.ParentName.IsEqualTo(unflat.Parent.Name);
+            flat.ParentParentName.IsEqualTo(null);
+            flat.oO.IsEqualTo(null);
+            flat.d.IsEqualTo(null);
         }
 
         [Test]
-        public void ObjectFlatTest()
+        public void GenericFlatTest()
         {
-            var f = new
+            var unflat = new Foo
             {
-                Parent = (object)new Foo
+                Parent = new Foo
                 {
                     _a = "aaa",
                     a = 23,
@@ -110,10 +94,29 @@ namespace Tests
                 }
             };
 
-            var flat = new Flat();
+            var flat = new FlatFoo();
 
-            flat.InjectFrom<FlatBoolToString>(f);
+            flat.InjectFrom<FlatBoolToString>(unflat);
             flat.Parentb.IsEqualTo("True");
+            flat.Bool.IsEqualTo(null);
+        }
+
+        [Test]
+        public void ObjectFlatTest()
+        {
+            var unflat = (object) new
+            {
+                Parent = (object)new Foo
+                {                    
+                    b = true,
+                    Name = "v"
+                }
+            };
+
+            var flat = new FlatFoo();
+
+            flat.InjectFrom<FlatBoolToString>(unflat);
+            flat.Parentb.IsEqualTo("True");            
             flat.Bool.IsEqualTo(null);
         }
     }

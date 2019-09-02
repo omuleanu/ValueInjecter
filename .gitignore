@@ -89,6 +89,9 @@ packages
 csx
 *.build.csdef
 
+# Visual Studio 2015 cache/options directory
+.vs/
+
 # Others
 [Bb]in
 [Oo]bj
