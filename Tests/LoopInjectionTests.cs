@@ -4,7 +4,8 @@ using NUnit.Framework;
 
 using Omu.ValueInjecter;
 using Omu.ValueInjecter.Injections;
-
+using Tests.Injections;
+using Tests.Misc;
 using Tests.SampleTypes;
 
 namespace Tests
@@ -25,8 +26,7 @@ namespace Tests
 
         private static Customer GetCustomer()
         {
-            var customer = new Customer { FirstName = "Art", LastName = "Vandelay", Id = 123, RegDate = DateTime.UtcNow };
-            return customer;
+            return new Customer { FirstName = "Art", LastName = "Vandelay", Id = 123, RegDate = DateTime.UtcNow };
         }
     }
 }

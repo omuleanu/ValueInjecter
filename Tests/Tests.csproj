@@ -71,6 +71,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InjectFromTests.cs" />
     <Compile Include="Injections\CloneInjection.cs" />
     <Compile Include="Cloning.cs" />
     <Compile Include="Injections\DateTimeToStr.cs" />

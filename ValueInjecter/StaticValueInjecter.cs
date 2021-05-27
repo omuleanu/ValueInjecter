@@ -1,12 +1,17 @@
 ﻿using Omu.ValueInjecter.Injections;
-using System.Reflection;
 
 namespace Omu.ValueInjecter
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class StaticValueInjecter
     {
+        /// <summary>
+        /// Default injection, can be replaced
+        /// </summary>
         public static IValueInjection DefaultInjection = new SameNameType();
-
+        
         /// <summary>
         /// Injects values from source to target
         /// </summary>
@@ -62,6 +67,15 @@ namespace Omu.ValueInjecter
         public static object InjectFrom(this object target, object source)
         {
             return DefaultInjection.Map(source, target);
+        }
+
+        /// <summary>
+        /// Inject properties with exact same name and type
+        /// </summary>
+        public static TTarget InjectFrom<TTarget>(this TTarget target, object source)
+        {
+            target = (TTarget) DefaultInjection.Map(source, target);
+            return target;
         }
     }
 }
