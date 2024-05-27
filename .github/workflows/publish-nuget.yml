@@ -24,7 +24,7 @@ defaults:
 
 jobs:
   create_nuget:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
       with:
@@ -35,8 +35,8 @@ jobs:
       uses: actions/setup-dotnet@v4
 
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
-    - run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
-
+    - run: dotnet pack .\ValueInjecter\ValueInjecter.csproj --configuration Release --output ${{ env.NuGetDirectory }}
+        
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
     - uses: actions/upload-artifact@v4
       with:
@@ -45,7 +45,7 @@ jobs:
         path: ${{ env.NuGetDirectory }}/*.nupkg
 
   run_test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
@@ -58,7 +58,7 @@ jobs:
     # https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
     # You can update this logic if you want to manage releases differently
     if: github.event_name == 'release'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [ run_test ]
     steps:
       # Download the NuGet package created in the previous job
