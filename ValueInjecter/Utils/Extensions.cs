@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace Omu.ValueInjecter.Utils
 {
+    /// <summary>
+    /// ValueInjecter extensions
+    /// </summary>
     public static class Extensions
     {
         /// <summary>

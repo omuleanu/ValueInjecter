@@ -2,6 +2,9 @@
 
 namespace Omu.ValueInjecter
 {
+    /// <summary>
+    /// mapper instance class
+    /// </summary>
     public class Mapper
     {
         /// <summary>
