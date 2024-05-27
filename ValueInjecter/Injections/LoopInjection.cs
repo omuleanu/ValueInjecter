@@ -12,31 +12,55 @@ namespace Omu.ValueInjecter.Injections
     /// </summary>
     public class LoopInjection : PropertyInjection
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public LoopInjection()
         {
         }
 
+        /// <summary>
+        /// ctor with ignored props setter
+        /// </summary>
+        /// <param name="ignoredProps"></param>
         public LoopInjection(string[] ignoredProps)
             : base(ignoredProps)
         {
         }
 
+        /// <summary>
+        /// get target property name based on source property name
+        /// </summary>
+        /// <param name="sourceName"></param>
+        /// <returns></returns>
         protected virtual string GetTargetProp(string sourceName)
         {
             return sourceName;
         }
 
+        /// <summary>
+        /// determine if types are matching
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         protected virtual bool MatchTypes(Type source, Type target)
         {
             return source == target;
         }
 
+        /// <summary>
+        /// set target property value 
+        /// </summary>
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
         {
             var val = sp.GetValue(source, null);
             tp.SetValue(target, val, null);
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected override void Execute(PropertyInfo sp, object source, object target)
         {
             if (sp.CanRead && sp.GetGetMethod() != null && (ignoredProps == null || !ignoredProps.Contains(sp.Name)))

@@ -13,6 +13,9 @@ namespace Omu.ValueInjecter.Injections
     /// </summary>
     public class FlatLoopInjection : ValueInjection
     {
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>        
         protected override void Inject(object source, object target)
         {
             var targetProps = target.GetType().GetProps();
@@ -22,16 +25,26 @@ namespace Omu.ValueInjecter.Injections
             }
         }
 
+        /// <summary>
+        /// match properties
+        /// </summary>        
         protected virtual bool Match(string propName, PropertyInfo unflatProp, PropertyInfo targetFlatProp)
         {
             return unflatProp.PropertyType == targetFlatProp.PropertyType && propName == unflatProp.Name && unflatProp.GetGetMethod() != null;
         }
 
+
+        /// <summary>
+        /// set value in the target property
+        /// </summary>
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
         {
             tp.SetValue(target, sp.GetValue(source, null), null);
         }
 
+        /// <summary>
+        /// execute injection on all properties
+        /// </summary>
         protected void Execute(PropertyInfo tp, object source, object target)
         {
             if (tp.CanWrite && tp.GetSetMethod() != null)

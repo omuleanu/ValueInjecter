@@ -14,8 +14,14 @@ namespace Omu.ValueInjecter.Injections
     /// </summary>
     public class UnflatLoopInjection : ValueInjection
     {
+        /// <summary>
+        /// 
+        /// </summary>
         protected Func<PropertyInfo, object, object> activator;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public UnflatLoopInjection()
         {
         }
@@ -29,6 +35,11 @@ namespace Omu.ValueInjecter.Injections
             this.activator = activator;
         }
 
+        /// <summary>
+        /// inject values from source to target
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
         protected override void Inject(object source, object target)
         {
             var sourceProps = source.GetType().GetProps();
@@ -38,16 +49,36 @@ namespace Omu.ValueInjecter.Injections
             }
         }
 
+        /// <summary>
+        /// check if properties match
+        /// </summary>
+        /// <param name="propName"></param>
+        /// <param name="unflatProp"></param>
+        /// <param name="sourceFlatProp"></param>
+        /// <returns></returns>
         protected virtual bool Match(string propName, PropertyInfo unflatProp, PropertyInfo sourceFlatProp)
         {
             return unflatProp.PropertyType == sourceFlatProp.PropertyType && propName == unflatProp.Name && unflatProp.GetSetMethod() != null;
         }
 
+        /// <summary>
+        /// set property value from source to target
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="sp"></param>
+        /// <param name="tp"></param>
         protected virtual void SetValue(object source, object target, PropertyInfo sp, PropertyInfo tp)
         {
             tp.SetValue(target, sp.GetValue(source, null), null);
         }
 
+        /// <summary>
+        /// execute property injection from source to target object
+        /// </summary>
+        /// <param name="sp"></param>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
         protected virtual void Execute(PropertyInfo sp, object source, object target)
         {
             if (sp.CanRead && sp.GetGetMethod() != null)

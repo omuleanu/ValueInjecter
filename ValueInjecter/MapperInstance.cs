@@ -3,6 +3,9 @@ using System.Collections.Concurrent;
 
 namespace Omu.ValueInjecter
 {
+    /// <summary>
+    /// mapper instance class
+    /// </summary>
     public class MapperInstance
     {
         /// <summary>
