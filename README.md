@@ -128,8 +128,6 @@ There are samples in the source code for WinForms, ASP.NET Web Forms, DAL, and W
 
 A deep cloning sample is [here](https://github.com/omuleanu/ValueInjecter/blob/dae7956439cac8516979fe254a520a1942c5cdeb/Tests/Cloning.cs), and [CloneInjection](https://github.com/omuleanu/ValueInjecter/blob/master/Tests/Injections/CloneInjection.cs).
 
-For ASP.NET MVC see http://prodinner.codeplex.com.
-
 **Questions:** http://stackoverflow.com/questions/tagged/valueinjecter
 
 **Chat:** https://gitter.im/omuleanu/ValueInjecter
