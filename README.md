@@ -1,3 +1,6 @@
+[![buildtest](https://github.com/omuleanu/ValueInjecter/actions/workflows/buildtest.yml/badge.svg)](https://github.com/omuleanu/ValueInjecter/actions/workflows/buildtest.yml) ![NuGet Downloads](https://img.shields.io/nuget/dt/ValueInjecter)
+
+
 get via nuget **[ValueInjecter](https://www.nuget.org/packages/ValueInjecter/)** 
 #### usage
 ``` ruby
@@ -126,8 +129,6 @@ you could store the instance in a static member, or use your IoC Container
 there's samples in the source code for winforms, ASP.net web-forms, DAL, and wpf
 
 deep cloning sample [here](https://github.com/omuleanu/ValueInjecter/blob/dae7956439cac8516979fe254a520a1942c5cdeb/Tests/Cloning.cs), and the [CloneInjection](https://github.com/omuleanu/ValueInjecter/blob/master/Tests/Injections/CloneInjection.cs)
-
-for ASP.net MVC see http://prodinner.codeplex.com
 
 **questions:** http://stackoverflow.com/questions/tagged/valueinjecter
 
