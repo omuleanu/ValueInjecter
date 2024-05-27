@@ -38,14 +38,14 @@ jobs:
 
     #dotnet build .\ValueInjecter\ValueInjecter.csproj
     - name: build
-      run: dotnet build $env.Project_Path
+      run: dotnet build ${{ env.Project_Path }}
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test $env:Test_Project_Path
+      run: dotnet test ${{ env.Test_Project_Path }}
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Project_Path /t:Restore /p:Configuration=$env:Configuration
+      run: msbuild ${{ env.Project_Path }} /t:Restore /p:Configuration=${{ env.Configuration }}
       env:
         Configuration: ${{ matrix.configuration }}
