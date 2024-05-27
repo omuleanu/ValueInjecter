@@ -35,7 +35,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-
+    
+    - name: Restore NuGet packages
+      run: dotnet restore ./ValueInjecter/ValueInjecter.csproj
+    
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
