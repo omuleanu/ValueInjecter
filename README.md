@@ -1,8 +1,8 @@
+[![buildtest](https://github.com/omuleanu/ValueInjecter/actions/workflows/buildtest.yml/badge.svg)](https://github.com/omuleanu/ValueInjecter/actions/workflows/buildtest.yml) ![NuGet Downloads](https://img.shields.io/nuget/dt/ValueInjecter)
+
 Get it via nuget **[ValueInjecter](https://www.nuget.org/packages/ValueInjecter/)** 
 
 ValueInjecter automatically maps and copies property values from one object to another.
-
-This is very useful when working with Entity Framework (EF) proxy objects.
 
 #### Usage
 ```
