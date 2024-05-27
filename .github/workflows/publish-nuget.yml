@@ -16,7 +16,7 @@ on:
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  NuGetDirectory: ${{ github.workspace}}/nuget
+  NuGetDirectory: ${{ github.workspace}}\nuget
 
 defaults:
   run:
@@ -54,6 +54,7 @@ jobs:
       with:
         name: nuget
         if-no-files-found: error        
+        retention-days: 5
         path: ${{ env.NuGetDirectory }}/*.nupkg
 
   run_test:
