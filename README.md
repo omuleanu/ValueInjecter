@@ -1,4 +1,6 @@
-[![buildtest](https://github.com/omuleanu/ValueInjecter/actions/workflows/buildtest.yml/badge.svg)](https://github.com/omuleanu/ValueInjecter/actions/workflows/buildtest.yml) ![NuGet Downloads](https://img.shields.io/nuget/dt/ValueInjecter)
+[![buildtest](https://github.com/omuleanu/ValueInjecter/actions/workflows/buildtest.yml/badge.svg)](https://github.com/omuleanu/ValueInjecter/actions/workflows/buildtest.yml) 
+![NuGet Downloads](https://img.shields.io/nuget/dt/ValueInjecter)
+[![NuGet](http://img.shields.io/nuget/vpre/ValueInjecter.svg?label=NuGet)](https://www.nuget.org/packages/ValueInjecter/)
 
 Get it via nuget **[ValueInjecter](https://www.nuget.org/packages/ValueInjecter/)** 
 
