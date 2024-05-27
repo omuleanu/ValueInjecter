@@ -33,6 +33,15 @@ jobs:
     # Install the .NET SDK indicated in the global.json file
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build libs
+      run: msbuild .\ValueInjecter\ValueInjecter.csproj /p:Configuration=Release
 
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
     - run: dotnet pack .\ValueInjecter\ValueInjecter.csproj --configuration Release --output ${{ env.NuGetDirectory }}
