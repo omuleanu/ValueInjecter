@@ -24,7 +24,7 @@ defaults:
 
 jobs:
   create_nuget:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
       with:
@@ -58,7 +58,7 @@ jobs:
         path: ${{ env.NuGetDirectory }}/*.nupkg
 
   run_test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
@@ -71,7 +71,7 @@ jobs:
     # https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
     # You can update this logic if you want to manage releases differently
     if: github.event_name == 'release'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [ run_test ]
     steps:
       # Download the NuGet package created in the previous job
